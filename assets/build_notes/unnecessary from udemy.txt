@@ -1,0 +1,122 @@
+
+This goes inside Post.php as one of the functions:
+
+    // //From Udemy, only for timeline POSTING, not relevant to my program
+
+    //declared earlier in constructor:
+
+    private $user_obj;
+
+
+    // public function submitPost($body, $user_to) {
+    //     $body = strip_tags($body);
+    //     $body = mysqli_real_escape_string($this->con, $body);
+
+    //     $body = str_replace('\r\n', '\n', $body);
+    //     $body = nl2br($body);
+
+    //     $check_empty = preg_replace('/\s+/', '', $body);
+
+    //     if($check_empty != "") {
+    //         //Current Date and Time
+    //         $date_added = date("Y-m-d H:i:s");
+    //         //Get username
+    //         $added_by = $this->user_obj->getUsername();
+
+    //         //if user is on their own profile, user_to is 'none'
+    //         if($user_to == $added_by) {
+    //             $user_to = "none";
+    //         }
+            
+    //     }
+    // }
+
+---------------------------------
+
+    <!-- Owen Class Section -->
+
+                    <input type="number" name="log_owen_classofn" placeholder="What year do you graduate from Owen?" value="<?php if (isset($_SESSION['log_owen_classof'])) {
+                                                                                                                                echo $_SESSION['log_owen_classof'];
+                                                                                                                            } ?>">
+                 
+                    <br>
+
+
+                    <!-- NOTICE THIS NEEDS TO BE A DROPDOWN MENU -->
+                    <!-- Owen Program -->
+
+                    <input type="text" name="log_owen_program" placeholder="What program are you a part of?" value="<?php if (isset($_SESSION['log_owen_program'])) {
+                                                                                                                        echo $_SESSION['log_owen_program'];
+                                                                                                                    } ?>">
+                   
+                    <br>
+
+                    <!-- Personal Statement -->
+
+                    <textarea rows="5" name="log_personal_statement" placeholder="Do you have any fun facts?" value="<?php if (isset($_SESSION['log_personal_statement'])) {
+                                                                                                                            echo $_SESSION['log_personal_statement'];
+                                                                                                                        } ?>">
+                    </textarea>
+
+                   
+                    <br>
+
+
+                    <!-- Hometown Section -->
+                    <input type="text" name="log_hometown" placeholder="Hometown" value="<?php if (isset($_SESSION['log_hometown'])) {
+                                                                                                echo $_SESSION['log_hometown'];
+                                                                                            } ?>">
+                    <br>
+
+
+                    <!-- Undergrad School -->
+                    <input type="text" name="log_undergrad_institution" placeholder="What was your undergraduate institution?" value="<?php if (isset($_SESSION['log_undergrad_institution'])) {
+                                                                                                                                            echo $_SESSION['log_undergrad_institution'];
+                                                                                                                                        } ?>">
+                    
+                    <br>
+
+                    <!-- Undergrad Major -->
+                    <input type="text" name="log_undergrad_major" placeholder="What did you major in?" value="<?php if (isset($_SESSION['log_undergrad_major'])) {
+                                                                                                                    echo $_SESSION['log_undergrad major'];
+                                                                                                                } ?>">
+                   
+                    <br>
+
+
+                    <!-- Fun facts -->
+                    <textarea rows="5" name="log_fun_fact" placeholder="Do you have any fun facts?" value="<?php if (isset($_SESSION['log_fun_fact'])) {
+                                                                                                                echo $_SESSION['log_fun_fact'];
+                                                                                                            } ?>">
+                    </textarea>
+                  
+                    <br>
+
+
+                    <!-- NOTICE THIS IS THE SOCIAL MEDIA FORM, FOR NOW, I'LL KEEP IT JUST TO LINKEDIN TO AVOID DEALING WITH ARRAYS -->
+                    <input type="text" name="log_social_media" placeholder="Linkedin Profile URL" value="<?php if (isset($_SESSION['log_social_media'])) {
+                                                                                                                echo $_SESSION['log_social_media'];
+                                                                                                            } ?>">
+                   
+                    <br>
+
+
+                    <!-- UPLOAD RESUME HERE -->
+                    <label for="log_resume_"> Please upload a copy of your resume.</label>
+                    <input type="file" name="log_resume_" placeholder="resume_" value="<?php if (isset($_SESSION['log_resume_'])) {
+                                                                                            echo $_SESSION['log_resume_'];
+                                                                                        } ?>">
+                   
+                    <br>
+
+
+                    <!-- Phone Number -->
+                    <input type="text" name="log_phone_number" placeholder="Phone Number" value="<?php if (isset($_SESSION['log_phone_number'])) {
+                                                                                                        echo $_SESSION['log_phone_number'];
+                                                                                                    } ?>">
+                    
+                    <br>
+
+-----------------------------------------------------
+
+
