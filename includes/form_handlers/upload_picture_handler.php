@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 
                     //New image manipulation object
                     $im = new ImageManipulator($fileDestination);
-
+                    
                     //croping algorithm
                     $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
                     $smDimmension = min(round($im->getWidth()), round($im->getHeight()));

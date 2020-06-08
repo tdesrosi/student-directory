@@ -41,9 +41,7 @@ class Post
                                 </div>
                                 <div style='padding: 1rem;'>
                                     <div class='poster_info'>
-                                        <button src='" . $username . "' class='btn btn-outline-dark btn-block'>
-                                            $name
-                                        </button>
+                                        <a href='" . $username . "'> $name </a>
                                         <br>
                                         <p>$owen_program</p>
                                         <p>$owen_classof_string</p>

@@ -4,13 +4,14 @@ include("includes/header.php");
 //include("includes/classes/Profile.php");
 include("includes/form_handlers/profile_change_handler.php");
 include("includes/form_handlers/upload_picture_handler.php");
+include("includes/form_handlers/upload_file_handler.php");
 
-if(isset($_GET['profile_username'])) {
+if (isset($_GET['profile_username'])) {
     $username = $_GET['profile_username'];
     // $user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
     // $user_array = mysqli_fetch_array($user_details_query);
 
-    if($username != $userLoggedIn){
+    if ($username != $userLoggedIn) {
         $headerRedirect = "Location: user.php/?profile_username=" . $username;
         header($headerRedirect);
     }
@@ -96,17 +97,17 @@ if(isset($_GET['profile_username'])) {
                 <br>
 
                 <select name="reg_owen_program" class="form-control text-center" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" placeholder="What program are you a part of?">
-                    <option value="" <?php if($owen_program == "") echo "selected"; ?>>--Please choose an option--</option>
-                    <option value="MBA" <?php if($owen_program == "MBA") echo "selected"; ?>>MBA</option>
-                    <option value="Executive MBA" <?php if($owen_program == "Executive MBA") echo "selected"; ?>>Executive MBA</option>
-                    <option value="MS Finance" <?php if($owen_program == "MS Finance") echo "selected"; ?>>MS Finance</option>
-                    <option value="MACC Assurance" <?php if($owen_program == "MACC Assurance") echo "selected"; ?>>MACC Assurance</option>
-                    <option value="MACC Valuation" <?php if($owen_program == "MACC Valuation") echo "selected"; ?>>MACC Valuation</option>
-                    <option value="Master of Marketing" <?php if($owen_program == "Master of Marketing") echo "selected"; ?>>Master of Marketing</option>
-                    <option value="Master of Management in Health Care" <?php if($owen_program == "Master of Management in Health Care") echo "selected"; ?>>Master of Management in Health Care</option>
-                    <option value="Executive Education Certificate Program" <?php if($owen_program == "Executive Education Certificate Program") echo "selected"; ?>>Executive Education Certificate Program</option>
-                    <option value="Accelerator Business Immersions" <?php if($owen_program == "Accelerator Business Immersions") echo "selected"; ?>>Accelerator Business Immersions</option>
-                    <option value="Technology Bootcamps" <?php if($owen_program == "Technology Bootcamps") echo "selected"; ?>>Technology Bootcamps</option>
+                    <option value="" <?php if ($owen_program == "") echo "selected"; ?>>--Please choose an option--</option>
+                    <option value="MBA" <?php if ($owen_program == "MBA") echo "selected"; ?>>MBA</option>
+                    <option value="Executive MBA" <?php if ($owen_program == "Executive MBA") echo "selected"; ?>>Executive MBA</option>
+                    <option value="MS Finance" <?php if ($owen_program == "MS Finance") echo "selected"; ?>>MS Finance</option>
+                    <option value="MACC Assurance" <?php if ($owen_program == "MACC Assurance") echo "selected"; ?>>MACC Assurance</option>
+                    <option value="MACC Valuation" <?php if ($owen_program == "MACC Valuation") echo "selected"; ?>>MACC Valuation</option>
+                    <option value="Master of Marketing" <?php if ($owen_program == "Master of Marketing") echo "selected"; ?>>Master of Marketing</option>
+                    <option value="Master of Management in Health Care" <?php if ($owen_program == "Master of Management in Health Care") echo "selected"; ?>>Master of Management in Health Care</option>
+                    <option value="Executive Education Certificate Program" <?php if ($owen_program == "Executive Education Certificate Program") echo "selected"; ?>>Executive Education Certificate Program</option>
+                    <option value="Accelerator Business Immersions" <?php if ($owen_program == "Accelerator Business Immersions") echo "selected"; ?>>Accelerator Business Immersions</option>
+                    <option value="Technology Bootcamps" <?php if ($owen_program == "Technology Bootcamps") echo "selected"; ?>>Technology Bootcamps</option>
                 </select>
 
                 <br>
@@ -138,23 +139,7 @@ if(isset($_GET['profile_username'])) {
                 <label for="reg_social_media"> Add a link to your Linkedin Profile:</label>
                 <br>
                 <input type="text" name="reg_social_media" placeholder="Linkedin Profile URL" value="<?php echo $social_media; ?>">
-                <br>
-                <!-- UPLOAD RESUME HERE -->
-                <label for="reg_resume_"> Please upload a copy of your resume.</label>
-                <br>
 
-                <div class="custom-file" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
-                    <input type="file" class="custom-file-input" id="customFile" name="reg_resume_" placeholder="resume_" value="<?php echo $resume_; ?>">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-
-                <script>
-                    //Name of file shows up on select
-                    $(".custom-file-input").on("change", function() {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                    });
-                </script>
 
                 <br>
                 <!-- Phone Number -->
@@ -168,6 +153,41 @@ if(isset($_GET['profile_username'])) {
                 <input type="submit" name="profile_change_button" value="Save Changes">
                 <!-- <button type="button" class="btn btn-light" name="post_button" id="submit_profile_post" >Save Changes</button> -->
             </form>
+            <form action="profile.php" method="POST" enctype="multipart/form-data">
+                <br>
+                <!-- UPLOAD RESUME HERE -->
+                <label for="resume"> Please upload a copy of your resume.</label>
+                <br>
+
+                <div class="custom-file" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
+                    <input type="file" class="custom-file-input" id="customResume" name="resume">
+                    <label class="custom-file-label" for="customResume">Upload Resume</label>
+                    <input type="submit" style="display: block;" name="submit-file" value="Submit">
+                </div>
+
+                <script>
+                    //Name of file shows up on select
+                    $(".custom-file-input").on("change", function() {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    });
+                </script>
+            </form>
+            <!-- <form action="profile.php" method="POST" enctype="multipart/form-data">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name="file">
+                            <label class="custom-file-label" for="customFile">Change Picture</label>
+                            <input type="submit" style="display: block;" name="submit" value="Submit">
+                        </div>
+
+                        <script>
+                            //Name of file shows up on select
+                            $(".custom-file-input").on("change", function() {
+                                var fileName = $(this).val().split("\\").pop();
+                                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                            });
+                        </script>
+                    </form> -->
         </div>
     </div>
 </div>
