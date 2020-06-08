@@ -17,9 +17,20 @@ class Post
             $profile_pic = $row['profile_pic'];
             $name = $row['first_name'] . ' ' . $row['last_name'];
             $username = $row['username'];
-            $personal_statement = $row['personal_statement'];
             $owen_classof = $row['owen_classof'];
             $owen_program = $row['owen_program'];
+
+            $owen_classof_string = "";
+            if($owen_classof != 0){
+                $owen_classof_string = "Class of " . $owen_classof;
+            } else {
+                $owen_classof_string = "";
+            }
+            
+            $personal_statement_string = "";
+            if($row['personal_statement'] != "") {
+                $personal_statement_string = substr($row['personal_statement'], 0, 120) . ". . .";
+            }
 
             $str .= "
                     <div class='col-lg-4 col-md-6' >
@@ -30,11 +41,15 @@ class Post
                                 </div>
                                 <div style='padding: 1rem;'>
                                     <div class='poster_info'>
-                                        <a href='" . $username . "'> $name </a>
-                                        <p>$owen_program class of $owen_classof
+                                        <button src='" . $username . "' class='btn btn-outline-dark btn-block'>
+                                            $name
+                                        </button>
+                                        <br>
+                                        <p>$owen_program</p>
+                                        <p>$owen_classof_string</p>
                                     </div>
                                     <div class='card_body'>
-                                        <p>$personal_statement</p> 
+                                        <p>$personal_statement_string</p> 
                                     </div>
                                 </div>
                             </div>

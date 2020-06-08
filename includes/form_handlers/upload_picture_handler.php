@@ -28,16 +28,34 @@ if (isset($_POST['submit'])) {
                     $fileDestination = 'uploads/images/' . $fileNameNew;
                     move_uploaded_file($fileTmpName, $fileDestination);
 
+                    //New image manipulation object
                     $im = new ImageManipulator($fileDestination);
-                    $centreX = round($im->getWidth() / 2);
-                    $centreY = round($im->getHeight() / 2);
 
-                    $x1 = $centreX - 100;
-                    $y1 = $centreY - 100;
+                    //croping algorithm
+                    $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
+                    $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
 
-                    $x2 = $centreX + 100;
-                    $y2 = $centreY + 100;
+                    $getWidth = round($im->getWidth());
+                    $getHeight = round($im->getHeight());
 
+                    $x1 = 0;
+                    $x2 = 0;
+                    $y1 = 100;
+                    $y2 = 100;
+
+                    if($getWidth === $lgDimmension) {
+                        $x1 = ($getWidth - $getHeight)/2;
+                        $y1 = 0;
+                        $x2 = $getWidth - ($getWidth - $getHeight)/2;
+                        $y2 = $getHeight;
+                    } else if($getHeight === $lgDimmension) {
+                        $x1 = 0;
+                        $y1 = ($getHeight - $getWidth)/2;
+                        $x2 = $getWidth;
+                        $y2 = $getHeight - ($getHeight - $getWidth)/2;
+                    }
+
+                    //crop and save image to new folder
                     $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
                     $finalImage = 'uploads/cropped_images/' . $fileDestination;
                     $im->save($finalImage);
