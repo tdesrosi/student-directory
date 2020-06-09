@@ -33,7 +33,7 @@ class Post
             }
 
             $str .= "
-                    <div class='col-lg-4 col-md-6' >
+                    <div class='col-lg-4 col-md-6 col-xl-3' style='padding: 0;'>
                         <div class='card' style='width: auto; margin: 1rem;'>
                             <div class='card-body' style='padding: 0;' >
                                 <div class='post_profile_pic'>

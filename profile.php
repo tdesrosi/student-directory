@@ -73,6 +73,7 @@ if (isset($_GET['profile_username'])) {
             $user_data_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
             $row = mysqli_fetch_array($user_data_query);
 
+            $email_sharing = $row['email_sharing'];
             $profile_poc = $row['profile_pic'];
             $hometown = $row['hometown'];
             $owen_classof = $row['owen_classof'];
@@ -145,9 +146,24 @@ if (isset($_GET['profile_username'])) {
                 <!-- Phone Number -->
                 <label for="reg_phone_number">Would you like to share your phone number?</label>
                 <input type="tel" class="form-control" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reg_phone_number" value="<?php echo $phone_number; ?>">
-                <br>
 
-                <?php if (isset($message)) echo $message; ?>
+                <br>
+                <!-- Email Sharing on/off -->
+
+                <label style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" for="reg_email_sharing">Would you like to disable email sharing? Your email is visible to others by default.</label>
+                <br>
+                <select name="reg_email_sharing" class="form-control text-center" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
+                    <option value="yes" <?php if ($email_sharing == "yes") echo "selected"; ?>>Yes, please share my email address.</option>
+                    <option value="no" <?php if ($email_sharing == "no") echo "selected"; ?>>No, do not share my email address.</option>
+                </select>
+
+                <br>
+                <?php
+                if (isset($message)) echo "
+                    <h1 style='color: blue;'>$message</h1>
+                    "
+                ?>
+                <br>
 
                 <!-- Submit Button -->
                 <input type="submit" name="profile_change_button" value="Save Changes">
@@ -173,21 +189,6 @@ if (isset($_GET['profile_username'])) {
                     });
                 </script>
             </form>
-            <!-- <form action="profile.php" method="POST" enctype="multipart/form-data">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile" name="file">
-                            <label class="custom-file-label" for="customFile">Change Picture</label>
-                            <input type="submit" style="display: block;" name="submit" value="Submit">
-                        </div>
-
-                        <script>
-                            //Name of file shows up on select
-                            $(".custom-file-input").on("change", function() {
-                                var fileName = $(this).val().split("\\").pop();
-                                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                            });
-                        </script>
-                    </form> -->
         </div>
     </div>
 </div>

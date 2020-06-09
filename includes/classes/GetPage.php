@@ -21,6 +21,7 @@ class GetPage
 
         // Defining Vars to prevent errors
         $profile_pic = "";
+        $email = "";
         $name = "";
         $username = "";
         $personal_statement = "";
@@ -40,6 +41,8 @@ class GetPage
         $row = mysqli_fetch_array($query);
 
         $profile_pic =  "../" . $row['profile_pic'];
+        $email = $row['email'];
+        $email_sharing = $row['email_sharing'];
         $name = $row['first_name'] . ' ' . $row['last_name'];
         $firstname = $row['first_name'];
         $personal_statement = $row['personal_statement'];
@@ -112,6 +115,12 @@ class GetPage
         if($phone_number != "") {
             $tel_string = "<a href=tel:" . $phone_number . ">Give me a phone call!</a>";
         }
+        $email_string = "";
+        if($email != "" && $email_sharing == 'yes') {
+            $email_string = "<h6><a href=mailto:" . $email . ">Send me an email!</a></h6>";
+        } else if($email_sharing == 'no'){
+            $email_string = "<h6><small><i> The user wishes not to share their email address. </i></small></h6> <br>";
+        }
 
 
         //final string
@@ -131,6 +140,7 @@ class GetPage
                                         <h5><i>$owen_program_string</h5>
                                         <p>$owen_classof_string</i></p>
                                         <br>
+                                        $email_string
                                         <h6>$social_media_string</h6>
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>

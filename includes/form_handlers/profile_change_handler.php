@@ -48,6 +48,8 @@ if (isset($_POST['profile_change_button'])) {
     $phone_number = strip_tags($_POST['reg_phone_number']);
     $_SESSION['reg_phone_number'] = $phone_number;
 
+    $email_sharing = strip_tags($_POST['reg_email_sharing']);
+    $_SESSION['reg_email_sharing'] = $email_sharing;
 
     $email_check = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
     $row = mysqli_fetch_array($email_check);
@@ -63,8 +65,8 @@ if (isset($_POST['profile_change_button'])) {
 
     if ($matched_user == "" || $matched_user == $userLoggedIn) {
         $message = "Details Updated";
-
         $query = mysqli_query($con, "UPDATE users SET
+            email_sharing='$email_sharing',
             hometown='$hometown',
             owen_classof='$owen_classof',
             owen_program='$owen_program',
