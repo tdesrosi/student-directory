@@ -37,7 +37,9 @@ class Post
                         <div class='card' style='width: auto; margin: 1rem;'>
                             <div class='card-body' style='padding: 0;' >
                                 <div class='post_profile_pic'>
-                                    <img class='card-img-top' style='border-radius: 0; max-width: 100%; border: none;' src='$profile_pic' >
+                                    <a href='" . $username . "'>
+                                        <img class='card-img-top' style='border-radius: 0; max-width: 100%; border: none;' src='$profile_pic' >
+                                    </a>
                                 </div>
                                 <div style='padding: 1rem;'>
                                     <div class='poster_info'>

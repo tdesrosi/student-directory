@@ -12,8 +12,7 @@ if (isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="assets/js/owen-student-page.js"></script>
 
 
@@ -29,6 +28,7 @@ if (isset($_SESSION['username'])) {
 <body>
 
     <header>
+
         <!-- ATTENTION - RE-ADD FIXED TOP TO CLASSES BELOW, I ONLY OMIT BECAUSE OF ERROR CHECKING -->
         <nav class="navbar navbar-expand-md navbar-light  bg-light">
             <a class="navbar-brand" href="./index.php">Owen Student Directory</a>
@@ -47,12 +47,69 @@ if (isset($_SESSION['username'])) {
                         <a class="nav-link" style="color: goldenrod;" href="./register.php">Student Login/Register</a>
                     </li>
                 </ul>
-                <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search for a Student" aria-label="Search">
-                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;" action="search.php" method="POST" name="search_form">
+                    <input name="search" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search">
+                    <div class="button_holder">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" name="submit-search">Search</button>
+                    </div>
                 </form>
+
             </div>
         </nav>
     </header>
 
-<div class="wrapper">    
+    <script>
+        var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+
+        $(document).ready(function() {
+
+            $('#loading').show();
+
+            //Original ajax request for loading first posts 
+            $.ajax({
+                url: "includes/handlers/ajax_load_posts.php",
+                type: "POST",
+                data: "page=1&userLoggedIn=" + userLoggedIn,
+                cache: false,
+
+                success: function(data) {
+                    $('#loading').hide();
+                    $('.posts_area').html(data);
+                }
+            });
+
+            $(window).scroll(function() {
+                var height = $('.posts_area').height(); //Div containing posts
+                var scroll_top = $(this).scrollTop();
+                var page = $('.posts_area').find('.nextPage').val();
+                var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+                if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
+                    $('#loading').show();
+
+                    var ajaxReq = $.ajax({
+                        url: "includes/handlers/ajax_load_posts.php",
+                        type: "POST",
+                        data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+                        cache: false,
+
+                        success: function(response) {
+                            $('.posts_area').find('.nextPage').remove(); //Removes current .nextpage 
+                            $('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage 
+
+                            $('#loading').hide();
+                            $('.posts_area').append(response);
+                        }
+                    });
+
+                } //End if 
+
+                return false;
+
+            }); //End (window).scroll(function())
+
+
+        });
+    </script>
+
+    <div class="wrapper">
