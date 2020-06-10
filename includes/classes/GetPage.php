@@ -15,11 +15,7 @@ class GetPage
 
     public function loadUser()
     {
-        $str = ""; //string to return
-        // $data = mysqli_query($this->con, "SELECT * FROM users WHERE username='$this->username'");
-        // $row = mysqli_fetch_array($data);
-
-        // Defining Vars to prevent errors
+        $str = "";
         $profile_pic = "";
         $email = "";
         $name = "";
@@ -146,7 +142,7 @@ class GetPage
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>
                                         <br>
-                                        <h6><small><i> Account Created on $signup_date </i></small></h6>
+                                        <h6><small style='opacity: 0.2;'><i> Account Created on $signup_date </i></small></h6>
                                     </div>
                                 </div>
                             </div>

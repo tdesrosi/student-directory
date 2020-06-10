@@ -17,9 +17,9 @@ if (isset($_SESSION['username'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="assets/js/owen-student-page.js"></script>
 
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/master.css">
+
     <title>Owen Student Directory</title>
 </head>
 
@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])) {
     <header>
 
         <!-- ATTENTION - RE-ADD FIXED TOP TO CLASSES BELOW, I ONLY OMIT BECAUSE OF ERROR CHECKING -->
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
             <a class="navbar-brand" href="./index.php">Owen Student Directory</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -46,13 +46,24 @@ if (isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;" action="search.php" method="POST" name="search_form">
-                    <input name="search" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search">
+                    <input name="q" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" id="search_text_input">
                     <div class="button_holder">
                         <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" name="submit-search">Search</button>
                     </div>
                 </form>
 
+
+
             </div>
         </nav>
+
     </header>
     <div class="wrapper">
+        <div class="search-dropdown">
+            <div class="search_results">
+
+            </div>
+            <div class="search_results_footer_empty" style="text-align: right;">
+
+            </div>
+        </div>

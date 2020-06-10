@@ -119,7 +119,7 @@ include("includes/classes/Post.php");
                 <!-- <h1 class="h2">Dashboard</h1> -->
             </div>
             <div class="table-responsive row pl-3 pr-3 justify-content-md-center posts_area">
-                <div class="posta_area">
+                <div class="posts_area">
                     <img style="text-align: center;" src="assets/images/icons/loading.gif" alt="" id="loading">
                 </div>
             </div>
@@ -157,6 +157,7 @@ include("includes/classes/Post.php");
 
                             if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
                                 $('#loading').show();
+                                alert("hello");
 
                                 var ajaxReq = $.ajax({
                                     url: "includes/handlers/ajax_load_posts.php",

@@ -1,158 +1,135 @@
 <?php
+
 include("includes/header.php");
+
+if(isset($_GET['q'])) {
+	$query = $_GET['q'];
+}
+else {
+	$query = "";
+}
+
+if(isset($_GET['type'])) {
+	$type = $_GET['type'];
+}
+else {
+	$type = "name";
+}
 ?>
 
+<div class="main_column column" id="main_column">
+
+	<?php 
+	if($query == "")
+		echo "You must enter something in the search box.";
+	else {
 
 
-<div class="container-fluid">
-    <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="sidebar-sticky pt-3">
-                <div class="user_details column">
-                    <!-- Profile Image -->
-                    <a class="profile-sidebar-image cropped"> <img src="<?php echo $user['profile_pic']; ?>" alt=""> </a>
-                </div>
 
-                <!-- Sidebar -->
+		//If query contains an underscore, assume user is searching for usernames
+		if($type == "username") 
+			$usersReturnedQuery = mysqli_query($con, "SELECT * FROM users WHERE username LIKE '$query%' AND user_closed='no' LIMIT 8");
+		//If there are two words, assume they are first and last names respectively
+		else {
 
-                <!-- Shows up only if user is logged in -->
-                <?php if (isset($_SESSION['username'])) echo '
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <div class="nav-link">
-                            <h5>
-                                Welcome, ' . $user['first_name'] . ' ' . $user['last_name'] . '
-                            </h5>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="' . $userLoggedIn . '">
-                            <span data-feather="home"></span>
-                            My Profile <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="includes/handlers/logout.php">
-                            <span data-feather="file"></span>
-                            Log Out
-                        </a>
-                    </li>
-                </ul> ' ?>
+			$names = explode(" ", $query);
 
-                <!-- Shows up anytime -->
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Sort By:</span>
-                    <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index_name.php">
-                            <span data-feather="file-text"></span>
-                            Name
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index_class.php">
-                            <span data-feather="file-text"></span>
-                            Class
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index_program.php">
-                            <span data-feather="file-text"></span>
-                            Program
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+			if(count($names) == 3)
+				$usersReturnedQuery = mysqli_query($con, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' AND last_name LIKE '$names[2]%') AND user_closed='no'");
+			//If query has one word only, search first names or last names 
+			else if(count($names) == 2)
+				$usersReturnedQuery = mysqli_query($con, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' AND last_name LIKE '$names[1]%') AND user_closed='no'");
+			else 
+				$usersReturnedQuery = mysqli_query($con, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' OR last_name LIKE '$names[0]%') AND user_closed='no'");
+		}
 
-        <!-- Profiles -->
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mt-5" id="main-platform">
-                <div class="container-fluid">
+		//Check if results were found 
+		if(mysqli_num_rows($usersReturnedQuery) == 0)
+			echo "We can't find anyone with a " . $type . " like: " .$query;
+		else 
+			echo mysqli_num_rows($usersReturnedQuery) . " results found: <br> <br>";
 
 
-                </div>
-                <!-- <h1 class="h2">Dashboard</h1> -->
-            </div>
-            <div class="table-responsive row pl-3 pr-3 justify-content-md-center">
+		echo "<p id='grey'>Try searching for:</p>";
+		echo "<a href='search.php?q=" . $query ."&type=name'>Names</a>, <a href='search.php?q=" . $query ."&type=username'>Usernames</a><br><br><hr id='search_hr'>";
+
+		while($row = mysqli_fetch_array($usersReturnedQuery)) {
+			$user_obj = new User($con, $user['username']);
+
+			$button = "";
+			$mutual_friends = "";
+
+			if($user['username'] != $row['username']) {
+
+				//Generate button depending on friendship status 
+				if($user_obj->isFriend($row['username']))
+					$button = "<input type='submit' name='" . $row['username'] . "' class='danger' value='Remove Friend'>";
+				else if($user_obj->didReceiveRequest($row['username']))
+					$button = "<input type='submit' name='" . $row['username'] . "' class='warning' value='Respond to request'>";
+				else if($user_obj->didSendRequest($row['username']))
+					$button = "<input type='submit' class='default' value='Request Sent'>";
+				else 
+					$button = "<input type='submit' name='" . $row['username'] . "' class='success' value='Add Friend'>";
+
+				$mutual_friends = $user_obj->getMutualFriends($row['username']) . " friends in common";
 
 
-                <?php
-                if (isset($_POST['submit-search'])) {
-                    $search = mysqli_real_escape_string($con, $_POST['search']);
-                    $sql = "SELECT * FROM users WHERE
-            first_name LIKE '%$search%' OR
-            last_name LIKE '%$search%' OR
-            hometown LIKE '%$search%' OR
-            owen_classof LIKE '%$search%' OR
-            owen_program LIKE '%$search%' OR
-            undergrad_institution LIKE '%$search%' OR
-            undergrad_major LIKE '%$search%' OR
-            fun_fact LIKE '%$search%' OR
-            personal_statement LIKE '%$search%'
+				//Button forms
+				if(isset($_POST[$row['username']])) {
 
-                    ";
-                    $result = mysqli_query($con, $sql);
-                    $queryResult = mysqli_num_rows($result);
-                    $str = "";
+					if($user_obj->isFriend($row['username'])) {
+						$user_obj->removeFriend($row['username']);
+						header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+					}
+					else if($user_obj->didReceiveRequest($row['username'])) {
+						header("Location: requests.php");
+					}
+					else if($user_obj->didSendRequest($row['username'])) {
 
-                    if ($queryResult > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
+					}
+					else {
+						$user_obj->sendRequest($row['username']);
+						header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+					}
 
-                            $profile_pic = $row['profile_pic'];
-                            $name = $row['first_name'] . ' ' . $row['last_name'];
-                            $username = $row['username'];
-                            $owen_classof = $row['owen_classof'];
-                            $owen_program = $row['owen_program'];
+				}
 
-                            $owen_classof_string = "";
-                            if ($owen_classof != 0) {
-                                $owen_classof_string = "Class of " . $owen_classof;
-                            } else {
-                                $owen_classof_string = "";
-                            }
 
-                            $personal_statement_string = "";
-                            if ($row['personal_statement'] != "") {
-                                $personal_statement_string = substr($row['personal_statement'], 0, 120) . ". . .";
-                            }
 
-                            $str .= "
-                        <div class='col-lg-4 col-md-6 col-xl-3' style='padding: 0;' >
-                            <div class='card' style='width: auto; margin: 1rem;'>
-                                <div class='card-body' style='padding: 0;' >
-                                    <div class='post_profile_pic'>
-                                        <a href='" . $username . "'>
-                                            <img class='card-img-top' style='border-radius: 0; max-width: 100%; border: none;' src='$profile_pic' >
-                                        </a>
-                                    </div>
-                                    <div style='padding: 1rem;'>
-                                        <div class='poster_info'>
-                                            <a href='" . $username . "'> $name </a>
-                                            <br>
-                                            <p>$owen_program</p>
-                                            <p>$owen_classof_string</p>
-                                        </div>
-                                        <div class='card_body'>
-                                            <p>$personal_statement_string</p> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        ";
-                        }
-                        echo " <div class='profile_post row'> $str </div>";
-                    } else {
-                        echo "<h1>No results found.</h1>";
-                    }
-                }
-                ?>
-            </div>
-        </main>
-    </div>
+			}
+
+			echo "<div class='search_result'>
+					<div class='searchPageFriendButtons'>
+						<form action='' method='POST'>
+							" . $button . "
+							<br>
+						</form>
+					</div>
+
+
+					<div class='result_profile_pic'>
+						<a href='" . $row['username'] ."'><img src='". $row['profile_pic'] ."' style='height: 100px;'></a>
+					</div>
+
+						<a href='" . $row['username'] ."'> " . $row['first_name'] . " " . $row['last_name'] . "
+						<p id='grey'> " . $row['username'] ."</p>
+						</a>
+						<br>
+						" . $mutual_friends ."<br>
+
+				</div>
+				<hr id='search_hr'>";
+
+		} //End while
+	}
+
+
+	?>
+
+
+
 </div>
+
+<?php
+include("includes/footer.php");
+?>

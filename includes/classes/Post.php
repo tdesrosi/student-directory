@@ -24,7 +24,7 @@ class Post
 
         $str = ""; //string to return
 
-        $data_query = mysqli_query($this->con, "SELECT * FROM users WHERE disabled_='no' ORDER BY $this->order_by ASC");
+        $data_query = mysqli_query($this->con, "SELECT * FROM users WHERE disabled_='no' ORDER BY CASE WHEN $this->order_by = '' THEN 1 ELSE 0 END, $this->order_by ASC");
 
         if (mysqli_num_rows($data_query) > 0) {
 
