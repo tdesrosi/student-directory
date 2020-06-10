@@ -18,6 +18,9 @@
 include("includes/header.php");
 include("includes/classes/User.php");
 include("includes/classes/Post.php");
+
+
+
 ?>
 
 <div class="container-fluid">
@@ -32,7 +35,8 @@ include("includes/classes/Post.php");
                 <!-- Sidebar -->
 
                 <!-- Shows up only if user is logged in -->
-                <?php if (isset($_SESSION['username'])) echo '
+                <?php if (isset($_SESSION['username'])) {
+                    echo '
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <div class="nav-link">
@@ -53,7 +57,27 @@ include("includes/classes/Post.php");
                             Log Out
                         </a>
                     </li>
-                </ul> ' ?>
+                </ul> ';
+                } else {
+                    echo '
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <h5>
+                                    Welcome, Guest!
+                                </h5>
+                                <p>
+                                    If you are a student, be sure to register and create your account. To everyone else, hello and welcome to our site! If you have any issues, be sure to contact us to report any bugs you may run into.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    ';
+                }
+
+
+                ?>
 
                 <!-- Shows up anytime -->
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -64,27 +88,21 @@ include("includes/classes/Post.php");
                 </h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link reorder" href="#" onclick="changeOrder('last_name')">
                             <span data-feather="file-text"></span>
-                            Class Low to High
+                            Name
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link reorder" href="#" onclick="changeOrder('owen_classof')">
                             <span data-feather="file-text"></span>
-                            Class High to Low
+                            Class
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link reorder" href="#" onclick="changeOrder('owen_program')">
                             <span data-feather="file-text"></span>
-                            Program A-Z
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text"></span>
-                            Program Z-A
+                            Program
                         </a>
                     </li>
                 </ul>
@@ -100,12 +118,79 @@ include("includes/classes/Post.php");
                 </div>
                 <!-- <h1 class="h2">Dashboard</h1> -->
             </div>
-            <div class="table-responsive row pl-3 pr-3 justify-content-md-center">
-                <?php
-                $post = new Post($con);
-                $post->loadPosts();
-                ?>
+            <div class="table-responsive row pl-3 pr-3 justify-content-md-center posts_area">
+                <div class="posta_area">
+                    <img style="text-align: center;" src="assets/images/icons/loading.gif" alt="" id="loading">
+                </div>
             </div>
+
+            <script>
+                var order_by = 'id';
+
+                function changeOrder(value) {
+                    order_by = value;
+                    console.log(order_by);
+                }
+
+                $(function() {
+                    var loadCards = function() {
+                        $('#loading').show();
+
+                        //Original ajax request for loading first posts 
+                        $.ajax({
+                            url: "includes/handlers/ajax_load_posts.php",
+                            type: "POST",
+                            data: "page=1&order_by=" + order_by,
+                            cache: false,
+
+                            success: function(data) {
+                                $('#loading').hide();
+                                $('.posts_area').html(data);
+                            }
+                        });
+
+                        $(window).scroll(function() {
+                            var height = $('.posts_area').height(); //Div containing posts
+                            var scroll_top = $(this).scrollTop();
+                            var page = $('.posts_area').find('.nextPage').val();
+                            var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+                            if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
+                                $('#loading').show();
+
+                                var ajaxReq = $.ajax({
+                                    url: "includes/handlers/ajax_load_posts.php",
+                                    type: "POST",
+                                    data: "page=" + page + "&order_by=" + order_by,
+                                    cache: false,
+
+                                    success: function(response) {
+                                        $('.posts_area').find('.nextPage').remove(); //Removes current .nextpage 
+                                        $('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage 
+
+                                        $('#loading').hide();
+                                        $('.posts_area').append(response);
+                                    }
+                                });
+
+                            } //End if 
+
+                            return false;
+
+                        }); //End (window).scroll(function())
+
+                        
+                        $('.reorder').on('click', loadCards);
+
+                    };
+                    $(document).ready(loadCards);
+                    
+
+
+
+                });
+            </script>
+
         </main>
     </div>
 </div>

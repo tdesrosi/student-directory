@@ -1,6 +1,9 @@
 /*
  * Sidebar
  */
+body{
+    margin-bottom: 50px;
+}
 
 .sidebar {
     position: fixed;

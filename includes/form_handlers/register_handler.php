@@ -97,7 +97,7 @@ if(isset($_POST['register_button'])){
         $profile_pic = "assets/images/profile_pics/defaults/profile_default.png";
 
         //insert new user
-        $query = mysqli_query($con, "INSERT INTO users VALUES (NULL, '$fName', '$lName', '$username', '$email', '$pw', '$date', '$profile_pic', '0', '', '0', '', '', '', '', '', '', '', '', 'no')");
+        $query = mysqli_query($con, "INSERT INTO users VALUES (NULL, '$fName', '$lName', '$username', '$email', 'yes', '$pw', '$date', '$profile_pic', '0', '', '0', '', '', '', '', '', '', '', '', 'no')");
         
         array_push($error_array, "<span style='color: #14C800;'>You're all set! Goahead and login!</span><br>");
 

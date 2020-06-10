@@ -127,13 +127,16 @@ require 'includes/form_handlers/login_handler.php';
                         echo "<span style='color: #14C800;'>You're all set! Goahead and login!</span><br>";
                     ?>
 
-                    <a href="#" id="signin" class="">Already have an account? Sign In here!</a>
+                    <h3><a href="#" id="signin" class="">Already have an account? Sign In here!</a></h3>
 
                 </form>
             </div>
         </div>
     </div>
 
-</body>
 
-</html>
+
+    
+<?php
+require "includes/footer.php";
+?> 

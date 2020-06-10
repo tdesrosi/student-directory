@@ -28,42 +28,39 @@ if (isset($_GET['profile_username'])) {
 
 <div class="wrapper">
     <div class="profile-box">
-        <div class="profile-header">
-            <br>
-            <div class="row container mt-4" style="width: 75%; margin: 0 12.5%">
-                <div class="col-lg-5">
-                    <a class="profile-sidebar-image cropped"> <img src="<?php echo $user['profile_pic']; ?>" alt=""> </a>
-                </div>
-                <div class="col-lg-7">
-                    <form action="profile.php" method="POST" enctype="multipart/form-data">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile" name="file">
-                            <label class="custom-file-label" for="customFile">Change Picture</label>
-                            <input type="submit" style="display: block;" name="submit" value="Submit">
-                        </div>
-
-                        <script>
-                            //Name of file shows up on select
-                            $(".custom-file-input").on("change", function() {
-                                var fileName = $(this).val().split("\\").pop();
-                                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                            });
-                        </script>
-                    </form>
-                </div>
+        <div class="profile-header border-bottom">
+            <div class="container-fluid" style="width: 75%; margin: 20px 12.5%;">
+                <h1 class="heading">
+                    <?php
+                    if (isset($_SESSION['username'])) echo 'Welcome, ' . $user['first_name'] . ' ' . $user['last_name'];
+                    ?>
+                </h1>
+                <h4>Personalize your profile below:</h4>
+                <br>
             </div>
-
-
             <br>
-            <h1>
+            <div style="width: 75%; margin: 20px 12.5%;" class="container">
+                <img src="<?php echo $user['profile_pic']; ?>" alt="" style="width: 50%; height: 37.5%; border-radius: 0;">
+                <br>
+            </div>
+            <div style="width: 75%; margin: 80px 12.5%;" class="container">
+                <form action="profile.php" method="POST" enctype="multipart/form-data">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" name="file">
+                        <label class="custom-file-label" for="customFile">Change Picture</label>
+                        <input type="submit" style="display: block;" name="submit" value="Submit new image">
+                    </div>
 
-                <?php
-                if (isset($_SESSION['username'])) echo 'Welcome, ' . $user['first_name'] . ' ' . $user['last_name'];
-                ?>
-            </h1>
-            <h4>Personalize your profile below:</h4>
+                    <script>
+                        //Name of file shows up on select
+                        $(".custom-file-input").on("change", function() {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                        });
+                    </script>
+                </form>
+            </div>
             <br>
-
         </div>
 
         <div class="container mt-4">
@@ -88,7 +85,19 @@ if (isset($_GET['profile_username'])) {
             ?>
 
             <!-- Owen Class Section -->
-            <form action="profile.php" method="POST" class="form-group">
+            <div class="heading container-fluid" style="width: 75%; margin: 20px 12.5%;">
+                <br>
+                <h1>
+                    Update your Profile Information Below:
+                </h1>
+                <br>
+                <h4>
+                    Keep in mind, nothing here is required. Feel free to add and leave out what you like! However, a bare profile never looks good...
+                </h4>
+                <br>
+            </div>
+
+            <form action="profile.php" method="POST" class="form-group border-bottom" name="main-form">
                 <label for="reg_owen_classof">What year do you graduate from Owen?</label>
                 <input type="number" name="reg_owen_classof" placeholder="Owen Graduation Year" value="<?php echo $owen_classof ?>">
                 <br>
@@ -146,7 +155,8 @@ if (isset($_GET['profile_username'])) {
                 <!-- Phone Number -->
                 <label for="reg_phone_number">Would you like to share your phone number?</label>
                 <input type="tel" class="form-control" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reg_phone_number" value="<?php echo $phone_number; ?>">
-
+                <small>Format: XXX-XXX-XXXX</small>
+                <br>
                 <br>
                 <!-- Email Sharing on/off -->
 
@@ -166,9 +176,10 @@ if (isset($_GET['profile_username'])) {
                 <br>
 
                 <!-- Submit Button -->
-                <input type="submit" name="profile_change_button" value="Save Changes">
-                <!-- <button type="button" class="btn btn-light" name="post_button" id="submit_profile_post" >Save Changes</button> -->
+                <input type="submit" name="profile_change_button" value="Save Changes" class="mb-5">
+                <br>
             </form>
+            <br>
             <form action="profile.php" method="POST" enctype="multipart/form-data">
                 <br>
                 <!-- UPLOAD RESUME HERE -->
@@ -178,7 +189,7 @@ if (isset($_GET['profile_username'])) {
                 <div class="custom-file" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
                     <input type="file" class="custom-file-input" id="customResume" name="resume">
                     <label class="custom-file-label" for="customResume">Upload Resume</label>
-                    <input type="submit" style="display: block;" name="submit-file" value="Submit">
+                    <input type="submit" style="display: block; text-align: center;" name="submit-file" value="Submit new File">
                 </div>
 
                 <script>
