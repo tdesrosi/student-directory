@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])) {
     <header>
 
         <!-- ATTENTION - RE-ADD FIXED TOP TO CLASSES BELOW, I ONLY OMIT BECAUSE OF ERROR CHECKING -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
             <a class="navbar-brand" href="./index.php">Owen Student Directory</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -48,8 +48,9 @@ if (isset($_SESSION['username'])) {
                 <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;" action="search.php" method="POST" name="search_form">
                     <input name="q" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" id="search_text_input">
                     <div class="button_holder">
-                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" name="submit-search">Search</button>
+                        <button id="nav_search_button" class="btn" style="display: none;"> </button>
                     </div>
+
                 </form>
 
 
@@ -63,7 +64,7 @@ if (isset($_SESSION['username'])) {
             <div class="search_results">
 
             </div>
-            <div class="search_results_footer_empty" style="text-align: right;">
+            <div class="search_results_footer_empty">
 
             </div>
         </div>

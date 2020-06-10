@@ -34,6 +34,10 @@ body{
     /* Scrollable contents if viewport is shorter than content. */
 }
 
+#sidebarMenu {
+    padding: 50px 10px;
+}
+
 @supports ((position: -webkit-sticky) or (position: sticky)) {
     .sidebar-sticky {
         position: -webkit-sticky;
@@ -70,7 +74,7 @@ img {
     position: fixed;
     min-width: 450px;
     width: 500px;
-    top: auto;
+    top: 60px;
     right: 10px;
 }
 
