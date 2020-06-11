@@ -1,0 +1,11 @@
+{
+  "name": "owen-student-page",
+  "version": "1.0.0",
+  "description": "______COPYRIGHT INFORMATION_______",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

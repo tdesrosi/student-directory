@@ -8,13 +8,13 @@ if(isset($_POST['cancel'])) {
 if(isset($_POST['close_account'])) {
 	$close_query = mysqli_query($con, "UPDATE users SET user_closed='yes' WHERE username='$userLoggedIn'");
 	session_destroy();
-	header("Location: register.php");
+	header("Location: index.php");
 }
 
 
 ?>
 
-<div class="main_column column">
+<div class="main_column column" style="margin: 80px 50px;">
 
 	<h4>Close Account</h4>
 

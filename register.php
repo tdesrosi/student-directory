@@ -54,8 +54,10 @@ require 'includes/form_handlers/login_handler.php';
                     <input type="submit" name="login_button" value="Login">
                     <br>
 
-                    <?php if (in_array("Email or password was incorrect<br>", $error_array))
-                        echo "Email or password was incorrect<br>"
+                    <?php if (in_array("Password incorrect.<br>", $error_array))
+                            echo "Password incorrect.<br>";
+                        else if (in_array("Couldn't find an account with that email address.<br>", $error_array))
+                            echo "Couldn't find an account with that email address.<br>";
                     ?>
                     <a href="#" id="signup">Need an account? Register Here!</a>
 

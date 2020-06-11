@@ -4,7 +4,6 @@ include("includes/header.php");
 //include("includes/classes/Profile.php");
 include("includes/form_handlers/profile_change_handler.php");
 include("includes/form_handlers/upload_picture_handler.php");
-include("includes/form_handlers/upload_file_handler.php");
 
 if (isset($_GET['profile_username'])) {
     $username = $_GET['profile_username'];
@@ -21,7 +20,6 @@ if (isset($_GET['profile_username'])) {
 
 ?>
 <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
-<script src="https://unpkg.com/jcrop"></script>
 <link rel="stylesheet" href="assets/css/profile_style.css">
 
 <h1 class="hidden">This is a profile page.</h1>
@@ -85,7 +83,7 @@ if (isset($_GET['profile_username'])) {
             ?>
 
             <!-- Owen Class Section -->
-            <div class="heading container-fluid" style="width: 75%; margin: 20px 12.5%;">
+            <div class="heading container-fluid" style="width: 75%; margin: 20px 12.5%; text-align: center;">
                 <br>
                 <h1>
                     Update your Profile Information Below:
@@ -97,7 +95,7 @@ if (isset($_GET['profile_username'])) {
                 <br>
             </div>
 
-            <form action="profile.php" method="POST" class="form-group border-bottom" name="main-form">
+            <form action="profile.php" method="POST" class="form-group" name="main-form" enctype="multipart/form-data">
                 <label for="reg_owen_classof">What year do you graduate from Owen?</label>
                 <input type="number" name="reg_owen_classof" placeholder="Owen Graduation Year" value="<?php echo $owen_classof ?>">
                 <br>
@@ -167,20 +165,12 @@ if (isset($_GET['profile_username'])) {
                     <option value="no" <?php if ($email_sharing == "no") echo "selected"; ?>>No, do not share my email address.</option>
                 </select>
 
-                <br>
-                <?php
-                if (isset($message)) echo "
-                    <h1 style='color: blue;'>$message</h1>
-                    "
-                ?>
+                
                 <br>
 
                 <!-- Submit Button -->
                 <input type="submit" name="profile_change_button" value="Save Changes" class="mb-5">
                 <br>
-            </form>
-            <br>
-            <form action="profile.php" method="POST" enctype="multipart/form-data">
                 <br>
                 <!-- UPLOAD RESUME HERE -->
                 <label for="resume"> Please upload a copy of your resume.</label>
@@ -199,6 +189,12 @@ if (isset($_GET['profile_username'])) {
                         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                     });
                 </script>
+                <br>
+                <?php
+                if (isset($message)) echo "
+                    <h1 style='color: blue;'>$message</h1>
+                    "
+                ?>
             </form>
         </div>
     </div>

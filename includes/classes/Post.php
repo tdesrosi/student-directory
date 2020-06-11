@@ -24,7 +24,7 @@ class Post
 
         $str = ""; //string to return
 
-        $data_query = mysqli_query($this->con, "SELECT * FROM users WHERE disabled_='no' ORDER BY CASE WHEN $this->order_by = '' THEN 1 ELSE 0 END, $this->order_by ASC");
+        $data_query = mysqli_query($this->con, "SELECT * FROM users WHERE disabled_='no' AND user_closed='no' ORDER BY CASE WHEN $this->order_by = '' THEN 1 ELSE 0 END, $this->order_by ASC");
 
         if (mysqli_num_rows($data_query) > 0) {
 
@@ -92,13 +92,13 @@ class Post
                 <input type='hidden' class='noMorePosts' value='false'>";
             } else {
                 $str .= "<input type='hidden' class='nextPage' value='true'>
-                <div class='card' style='width: auto; margin: 1rem;'>
+                <div class='card' style='width: 100%; margin: 1rem;'>
                     <div class='card-body' style='padding: 0;' >
                         <div class='post_profile_pic'>
                             <div style='padding: 1rem;'>
-                                <div class='poster_info'>
+                                <div class='poster_info' style='text-align: center;'>
                                     <h4>That's all we have (For now...)</h4>
-                                    <p style='text-align: center;'> No more people to show! </p>
+                                    <p> No more people to show! </p>
                                 </div>
                             </div>
                         </div>
