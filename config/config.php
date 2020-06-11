@@ -6,7 +6,13 @@ session_start();
 
 $timezone = date_default_timezone_set("America/Chicago");
 
-$con = mysqli_connect("localhost", "root", "", "owen-students");
+$servername = getenv('HOST');
+$dbuser = getenv('USERNAME');
+$dbpass = getenv('PASSWORD');
+$dbname = getenv('DATABASE');
+
+
+$con = mysqli_connect($servername, $dbuser, $dbpass, $dbname);
 $order_by = 'id';
 
 if(mysqli_connect_errno()){
