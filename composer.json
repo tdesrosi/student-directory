@@ -6,9 +6,11 @@
       "symfony/twig-bridge": "^3",
         "alrik11es/cowsayphp": "^1.2",
         "csanquer/pdo-service-provider": "~1.1dev",
-        "vlucas/phpdotenv": "^5.0"
+        "vlucas/phpdotenv": "^5.0",
+        "aws/aws-sdk-php": "~3.0"
     },
     "require-dev": {
-      "heroku/heroku-buildpack-php": "*"
+      "heroku/heroku-buildpack-php": "*",
+        "phpunit/phpunit": "^9"
     }
   }
