@@ -1,18 +1,15 @@
-<!-- This file is subject to the terms and conditions defined in the file README.txt -->
-
 <?php
+declare(strict_types=1);
+require __DIR__ . "../../vendor/autoload.php";
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+
 ob_start(); //Turns on output buffering
 session_start();
 
 $timezone = date_default_timezone_set("America/Chicago");
-
-$servername = getenv('HOST');
-$dbuser = getenv('USERNAME');
-$dbpass = getenv('PASSWORD');
-$dbname = getenv('DATABASE');
-
-
-$con = mysqli_connect($servername, $dbuser, $dbpass, $dbname);
+$con = mysqli_connect($_SERVER["HOST"], $_SERVER["USERNAME"], $_SERVER["PASSWORD"], $_SERVER["DATABASE"]);
 $order_by = 'id';
 
 if(mysqli_connect_errno()){
