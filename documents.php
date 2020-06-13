@@ -55,22 +55,22 @@ if (isset($_SESSION['username'])) {
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
                                         $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         echo $initialPhotoDestination;
-                                        
+
                                         //New image manipulation object
                                         //Have to manipulate and then reupload to bucket
-                                        if($fileActualExt == 'png') {
-                                            $im = imagecreatefrompng(file_get_contents($initialPhotoDestination));
+                                        if ($fileActualExt == 'png') {
+                                            $im = imagecreatefrompng($initialPhotoDestination);
                                             $lgDimmension =  max(imagesx($im), imagesy($im));
                                             $smDimmension = min(imagesx($im), imagesy($im));
-    
+
                                             $getWidth = round(imagesx($im));
                                             $getHeight = round(imagesy($im));
-    
+
                                             $x1 = 0;
                                             $x2 = 0;
                                             $y1 = 100;
                                             $y2 = 100;
-    
+
                                             if ($getWidth === $lgDimmension) {
                                                 $x1 = ($getWidth - $getHeight) / 2;
                                                 $y1 = 0;
@@ -79,14 +79,12 @@ if (isset($_SESSION['username'])) {
 
                                                 $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
                                                 if ($im2 !== FALSE) {
-                                                      $newImage = imagepng($im2); 
-                                                    imagedestroy($im2); 
+                                                    $newImage = imagepng($im2);
+                                                    imagedestroy($im2);
                                                     $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
                                                     $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
                                                     echo $finalPhotoDestination;
-                                                } 
-                                               
-
+                                                }
                                             } else if ($getHeight === $lgDimmension) {
                                                 $x1 = 0;
                                                 $y1 = ($getHeight - $getWidth) / 2;
@@ -95,28 +93,26 @@ if (isset($_SESSION['username'])) {
 
                                                 $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
                                                 if ($im2 !== FALSE) {
-                                                    $newImage = imagepng($im2); 
-                                                  imagedestroy($im2); 
-                                                  $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
-                                                  $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                                  echo $finalPhotoDestination;
-                                              } 
-
+                                                    $newImage = imagepng($im2);
+                                                    imagedestroy($im2);
+                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
+                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                                    echo $finalPhotoDestination;
+                                                }
                                             }
-
                                         } else {
-                                            $im = imagecreatefromjpeg(file_get_contents($initialPhotoDestination));
+                                            $im = imagecreatefromjpeg($initialPhotoDestination);
                                             $lgDimmension =  max(imagesx($im), imagesy($im));
                                             $smDimmension = min(imagesx($im), imagesy($im));
-    
+
                                             $getWidth = round(imagesx($im));
                                             $getHeight = round(imagesy($im));
-    
+
                                             $x1 = 0;
                                             $x2 = 0;
                                             $y1 = 100;
                                             $y2 = 100;
-    
+
                                             if ($getWidth === $lgDimmension) {
                                                 $x1 = ($getWidth - $getHeight) / 2;
                                                 $y1 = 0;
@@ -124,7 +120,13 @@ if (isset($_SESSION['username'])) {
                                                 $y2 = $getHeight;
 
                                                 $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-
+                                                if ($im2 !== FALSE) {
+                                                    $newImage = imagepng($im2);
+                                                    imagedestroy($im2);
+                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
+                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                                    echo $finalPhotoDestination;
+                                                }
                                             } else if ($getHeight === $lgDimmension) {
                                                 $x1 = 0;
                                                 $y1 = ($getHeight - $getWidth) / 2;
@@ -132,10 +134,16 @@ if (isset($_SESSION['username'])) {
                                                 $y2 = $getHeight - ($getHeight - $getWidth) / 2;
 
                                                 $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-
+                                                if ($im2 !== FALSE) {
+                                                    $newImage = imagepng($im2);
+                                                    imagedestroy($im2);
+                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
+                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                                    echo $finalPhotoDestination;
+                                                }
                                             }
                                         }
-                                       
+
                                         try {
                                             // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                             $finalUpload = $s3->upload($bucket, $fileName, fopen($initialPhotoDestination, 'rb'), 'public-read');
@@ -148,7 +156,7 @@ if (isset($_SESSION['username'])) {
                                             header("Location: profile.php?uploadsuccess");
                                         } catch (Exception $e) { ?>
                                             <p>Final Upload error :(</p>
-                                        <?php 
+                                        <?php
                                         } ?>
 
 
@@ -159,7 +167,7 @@ if (isset($_SESSION['username'])) {
                                     <?php
                                     } catch (Exception $e) { ?>
                                         <p>Initial Upload error :(</p>
-                                    <?php }
+                <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
