@@ -142,6 +142,7 @@ class GetPage
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>
                                         <br>
+                                        $resume_
                                         <h6><small style='opacity: 0.2;'><i> Account Created on $signup_date </i></small></h6>
                                     </div>
                                 </div>

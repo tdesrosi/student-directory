@@ -7,7 +7,14 @@ $s3 = new Aws\S3\S3Client([
     'region'   => 'us-east-1',
 ]);
 $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in found in env!');
-$username = $_SESSION['username'];
+
+
+if(isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+} else {
+    header("Location: register.php");
+}
+
 ?>
 
 
