@@ -7,7 +7,7 @@ $s3 = new Aws\S3\S3Client([
     'region'   => 'us-east-1',
 ]);
 $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in found in env!');
-
+$username = $_SESSION['username'];
 ?>
 
 
@@ -23,6 +23,11 @@ $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['photoUpload']) && $_FILES['photoUpload']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['photoUpload']['tmp_name'])) {
                     // FIXME: you should add more of your own validation here, e.g. using ext/fileinfo
+
+
+
+
+
                     try {
                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                         $upload = $s3->upload($bucket, $_FILES['photoUpload']['name'], fopen($_FILES['photoUpload']['tmp_name'], 'rb'), 'public-read');
@@ -33,26 +38,72 @@ $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in
                 <?php }
                 } ?>
 
+
+
+                <!-- RESUME UPLOAD SYSTEM -->
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['resumeUpload']) && $_FILES['resumeUpload']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['resumeUpload']['tmp_name'])) {
                     // FIXME: you should add more of your own validation here, e.g. using ext/fileinfo
-                    try {
-                        // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                        $upload = $s3->upload($bucket, $_FILES['resumeUpload']['name'], fopen($_FILES['resumeUpload']['tmp_name'], 'rb'), 'public-read');
-                ?>
-                        <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
-                    <?php } catch (Exception $e) { ?>
-                        <p>Upload error :(</p>
-                <?php }
-                } ?>
+                    $file = $_FILES['resumeUpload'];
+                    $fileName = $_FILES['resumeUpload']['name'];
+                    $fileTmpName = $_FILES['resumeUpload']['tmp_name'];
+                    $fileSize = $_FILES['resumeUpload']['size'];
+                    $fileError = $_FILES['resumeUpload']['error'];
+                    $fileType = $_FILES['resumeUpload']['name'];
+                    var_dump($file);
+                    $fileExt = explode('.', $fileName);
+                    $fileActualExt = strtolower(end($fileExt));
+                    $allowed = array('doc', 'docx', 'pdf');
 
-                <form action="<?=$_SERVER['PHP_SELF']?>" method="POST" enctype="multipart/form-data">
+                    $email_check = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
+                    $row = mysqli_fetch_array($email_check);
+                    $matched_user = $row['username'];
+
+                    if ($matched_user == "" || $matched_user == $userLoggedIn) {
+                        if (in_array($fileActualExt, $allowed)) {
+                            if ($fileError === 0) {
+                                if ($fileSize < 1000000) {
+                                    $fileNameNew = $username . "." . $fileActualExt;
+                                    //try uploading into bucket
+                                    try {
+                                        // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
+                                        echo $_FILES['resumeUpload']['name'];
+                                        echo $_FILES['resumeUpload']['tmp_name'];
+                                        $upload = $s3->upload($bucket, $_FILES['resumeUpload']['name'], fopen($_FILES['resumeUpload']['tmp_name'], 'rb'), 'public-read');
+
+                                        $fileDestination = htmlspecialchars($upload->get('ObjectURL'));
+                                        $query = mysqli_query($con, "UPDATE users SET resume_='$fileDestination' WHERE username='$userLoggedIn'");
+                                    ?>
+                                        <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
+                                    <?php 
+                                        header("Location: profile.php?uploadsuccess");
+                                        } catch (Exception $e) { ?>
+                                        <p>Upload error :(</p>
+                                    <?php }
+                                } else {
+                                    echo "Your file is too big to upload, try smaller than 1MB.";
+                                }
+                            } else {
+                                echo "There was an error uploading your file.";
+                            }
+                        } else {
+                            echo "You cannot upload files of this type.";
+                        }
+                    }
+                }
+                ?>
+
+
+
+
+
+
+                <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
                     <!-- UPLOAD PROFILE IMAGE HERE -->
                     <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="photoUpload">
-                            <label class="custom-file-label" for="inputGroupFile04">Choose Profile Picture</label>
-                            <input type="submit" value="Upload">
+                            <input type="file" class="custom-file-input" id="inputGroupFile1" name="photoUpload">
+                            <label class="custom-file-label" for="inputGroupFile1">Choose Profile Picture</label>
                         </div>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit" value="Upload">Sumbit File</button>
@@ -60,11 +111,11 @@ $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in
                     </div>
                 </form>
                 <!-- UPLOAD RESUME HERE -->
-                <form action="<?=$_SERVER['PHP_SELF']?>" method="POST" enctype="multipart/form-data">
+                <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="resumeUpload">
-                            <label class="custom-file-label" for="inputGroupFile04">Upload Resume</label>
+                            <input type="file" class="custom-file-input" id="inputGroupFile2" name="resumeUpload">
+                            <label class="custom-file-label" for="inputGroupFile2">Upload Resume</label>
                         </div>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit" value="Upload">Sumbit File</button>
