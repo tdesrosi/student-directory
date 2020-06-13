@@ -53,7 +53,6 @@ if (isset($_SESSION['username'])) {
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
-
                                         $photoDestination = htmlspecialchars($upload->get('ObjectURL'));
                                         // echo $photoDestination;
                                         // $query = mysqli_query($con, "UPDATE users SET profile_pic='$photoDestination' WHERE username='$userLoggedIn'");
@@ -93,7 +92,8 @@ if (isset($_SESSION['username'])) {
                                     //crop and save image to new folder
                                     $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
                                     $im->save($photoDestination);
-
+                                    echo $photoDestination;
+                                    echo $fileName;
                                     //try uploading into bucket again, after cropping
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
