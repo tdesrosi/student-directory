@@ -168,7 +168,6 @@ include("includes/classes/Post.php");
 
                             if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
                                 $('#loading').show();
-                                alert("hello");
 
                                 var ajaxReq = $.ajax({
                                     url: "includes/handlers/ajax_load_posts.php",
