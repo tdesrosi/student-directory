@@ -52,11 +52,11 @@ if (isset($_SESSION['username'])) {
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
-                                        $fileDestination = htmlspecialchars($initalUpload->get('ObjectURL'));
+                                        $fileDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET profile_pic='$fileDestination' WHERE username='$userLoggedIn'");
                                         ?>
-                                        <p>Initial Upload <a href="<?= htmlspecialchars($initalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
-                                    <?php
+                                        <p>Initial Upload <a href="<?= htmlspecialchars($initialUpload->get('ObjectURL')) ?>">successful</a> :)</p>
+                                    <?php   header("Location: profile.php?uploadsuccess");
                                     } catch (Exception $e) { ?>
                                         <p>Initial Upload error :(</p>
                                      <?php }
