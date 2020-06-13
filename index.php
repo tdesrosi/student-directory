@@ -21,6 +21,7 @@ include("includes/classes/Post.php");
 
 
 
+
 ?>
 
 <div class="container-fluid">
@@ -118,9 +119,13 @@ include("includes/classes/Post.php");
         <!-- Profiles -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mt-5" id="main-platform">
-                <div class="container-fluid">
-
-
+                <div class="container-fluid mt-5 mb-5">
+                    <div class="search-dropdown">
+                        <div class="search_results">
+                        </div>
+                        <div class="search_results_footer_empty">
+                        </div>
+                    </div>
                 </div>
                 <!-- <h1 class="h2">Dashboard</h1> -->
             </div>
@@ -186,12 +191,12 @@ include("includes/classes/Post.php");
 
                         }); //End (window).scroll(function())
 
-                        
+
                         $('.reorder').on('click', loadCards);
 
                     };
                     $(document).ready(loadCards);
-                    
+
 
 
 

@@ -60,11 +60,4 @@ if (isset($_SESSION['username'])) {
 
     </header>
     <div class="wrapper">
-        <div class="search-dropdown">
-            <div class="search_results">
-
-            </div>
-            <div class="search_results_footer_empty">
-
-            </div>
-        </div>
+        

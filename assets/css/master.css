@@ -74,12 +74,6 @@ img {
 .search-dropdown {
     background-color: #f8f9fa;
     text-align: left;
-    z-index: 3;
-    position: fixed;
-    min-width: 400px;
-    width: auto;
-    top: 280px;
-    right: 10px;
 }
 
 .resultsDisplay {
