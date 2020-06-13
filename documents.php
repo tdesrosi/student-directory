@@ -55,8 +55,8 @@ if (isset($_SESSION['username'])) {
                                         $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
 
                                         $photoDestination = htmlspecialchars($upload->get('ObjectURL'));
-                                        echo $photoDestination;
-                                        $query = mysqli_query($con, "UPDATE users SET profile_pic='$photoDestination' WHERE username='$userLoggedIn'");
+                                        // echo $photoDestination;
+                                        // $query = mysqli_query($con, "UPDATE users SET profile_pic='$photoDestination' WHERE username='$userLoggedIn'");
                                     ?>
                                         <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
@@ -64,13 +64,9 @@ if (isset($_SESSION['username'])) {
                                     } catch (Exception $e) { ?>
                                         <p>Upload error :(</p>
                                     <?php }
-
-
                                     //New image manipulation object
-                                    $im = new ImageManipulator($fileTmpName);
-
-
-
+                                    //Have to manipulate and then reupload to bucket
+                                    $im = new ImageManipulator($photoDestination);
                                     //croping algorithm
                                     $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
                                     $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
@@ -97,7 +93,7 @@ if (isset($_SESSION['username'])) {
 
                                     //crop and save image to new folder
                                     $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
-                                    $im->save($fileTmpName);
+                                    $im->save($photoDestination);
 
                                     //try uploading into bucket
                                     
