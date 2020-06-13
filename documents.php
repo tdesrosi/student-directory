@@ -52,63 +52,61 @@ if (isset($_SESSION['username'])) {
                                 if ($fileSize < 2000000) {
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                                        $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
-                                        $photoDestination = htmlspecialchars($upload->get('ObjectURL'));
-                                        // echo $photoDestination;
-                                        // $query = mysqli_query($con, "UPDATE users SET profile_pic='$photoDestination' WHERE username='$userLoggedIn'");
-                                    ?>
-                                        <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
-                                    <?php
-                                    } catch (Exception $e) { ?>
-                                        <p>Upload error :(</p>
-                                    <?php }
-                                    //New image manipulation object
-                                    //Have to manipulate and then reupload to bucket
-                                    $im = new ImageManipulator($photoDestination);
-                                    //croping algorithm
-                                    $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
-                                    $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
+                                        $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
+                                        $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
+                                        //New image manipulation object
+                                        //Have to manipulate and then reupload to bucket
+                                        $im = new ImageManipulator($initialPhotoDestination);
+                                        //croping algorithm
+                                        $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
+                                        $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
 
-                                    $getWidth = round($im->getWidth());
-                                    $getHeight = round($im->getHeight());
+                                        $getWidth = round($im->getWidth());
+                                        $getHeight = round($im->getHeight());
 
-                                    $x1 = 0;
-                                    $x2 = 0;
-                                    $y1 = 100;
-                                    $y2 = 100;
-
-                                    if ($getWidth === $lgDimmension) {
-                                        $x1 = ($getWidth - $getHeight) / 2;
-                                        $y1 = 0;
-                                        $x2 = $getWidth - ($getWidth - $getHeight) / 2;
-                                        $y2 = $getHeight;
-                                    } else if ($getHeight === $lgDimmension) {
                                         $x1 = 0;
-                                        $y1 = ($getHeight - $getWidth) / 2;
-                                        $x2 = $getWidth;
-                                        $y2 = $getHeight - ($getHeight - $getWidth) / 2;
-                                    }
+                                        $x2 = 0;
+                                        $y1 = 100;
+                                        $y2 = 100;
 
-                                    //crop and save image to new folder
-                                    $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
-                                    $im->save($photoDestination);
-                                    echo $photoDestination;
-                                    echo $fileName;
-                                    //try uploading into bucket again, after cropping
-                                    try {
-                                        // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                                        $upload = $s3->upload($bucket, $fileName, fopen($photoDestination, 'rb'), 'public-read');
+                                        if ($getWidth === $lgDimmension) {
+                                            $x1 = ($getWidth - $getHeight) / 2;
+                                            $y1 = 0;
+                                            $x2 = $getWidth - ($getWidth - $getHeight) / 2;
+                                            $y2 = $getHeight;
+                                        } else if ($getHeight === $lgDimmension) {
+                                            $x1 = 0;
+                                            $y1 = ($getHeight - $getWidth) / 2;
+                                            $x2 = $getWidth;
+                                            $y2 = $getHeight - ($getHeight - $getWidth) / 2;
+                                        }
 
-                                        $croppedPhotoDestination = htmlspecialchars($upload->get('ObjectURL'));
-                                        echo $croppedPhotoDestination;
-                                        $query = mysqli_query($con, "UPDATE users SET profile_pic='$croppedPhotoDestination' WHERE username='$userLoggedIn'");
-                                    ?>
-                                        <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
+                                        //crop and save image to new folder
+                                        $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
+                                        $im->save($nitialPhotoDestination);
+                                        echo $initialPhotoDestination;
+                                        var_dump($im);
+                                        //try uploading into bucket again, after cropping
+                                        try {
+                                            // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
+                                            $finalUpload = $s3->upload($bucket, $fileName, fopen($initialPhotoDestination, 'rb'), 'public-read');
+                                            $croppedPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                            echo $croppedPhotoDestination;
+                                            $query = mysqli_query($con, "UPDATE users SET profile_pic='$croppedPhotoDestination' WHERE username='$userLoggedIn'");
+                ?>
+                                            <p>Final Upload <a href="<?= htmlspecialchars($finalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
+                                        <?php
+                                            header("Location: profile.php?uploadsuccess");
+                                        } catch (Exception $e) { ?>
+                                            <p>Final Upload error :(</p>
+                                        <?php }
+
+                                        ?>
+                                        <p>Initial Upload <a href="<?= htmlspecialchars($initalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
-                                        header("Location: profile.php?uploadsuccess");
                                     } catch (Exception $e) { ?>
-                                        <p>Upload error :(</p>
-                                    <?php }
+                                        <p>Inial Upload error :(</p>
+                <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
