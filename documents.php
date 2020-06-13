@@ -54,6 +54,8 @@ if (isset($_SESSION['username'])) {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
                                         $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
+                                        echo $initialPhotoDestination;
+
                                         //New image manipulation object
                                         //Have to manipulate and then reupload to bucket
                                         $im = new ImageManipulator("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftechcrunch.com%2F2015%2F12%2F01%2Fgoogle-turns-image-search-into-pinterest-with-new-collections-feature%2F&psig=AOvVaw1wBfjahvfzGhDM3nptxnEb&ust=1592161070943000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLCNxKu8_-kCFQAAAAAdAAAAABAD");
