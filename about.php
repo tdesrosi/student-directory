@@ -1,6 +1,13 @@
 <?php
 include("includes/header.php");
 
+//Find my info
+$query = mysqli_query($con, "SELECT * FROM users WHERE email='thomas.l.desrosiers@vanderbilt.edu'");
+$row = mysqli_fetch_array($query);
+
+$resume_ = $row['resume_'];
+$profile_picture = $row['profile_pic'];
+
 //Information Strings
 $hometown_string =
     '<h6><i>Where are you from?</i></h6>
@@ -32,14 +39,14 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
 
 ?>
 
-<div class="profile_page">
-    <div style='margin: 4% 7%'>
+<div class="wrapper">
+    <div style="margin: 10% 7%;">
         <div class='container-fluid row'>
-            <div class='col-md-4'>
-                <div class='card'>
+            <div class='col-md-4 mt-2 mb-2'>
+                <div class='card' style="padding: 5px;">
                     <div class='card-body' style='padding: 0;'>
                         <div class='post_profile_pic'>
-                            <!-- <img class='card-img-top' src='#'> -->
+                            <img class='card-img-top' src='<?php echo $profile_picture ?>'>
                         </div>
                         <div style='padding: 1rem;'>
                             <div class='poster_info'>
@@ -51,14 +58,14 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
                                 <?php echo $email_string ?>
                                 <h6><?php echo $social_media_string ?></h6>
                                 <h6><?php echo $tel_string ?></h6>
-                                <!-- <h6>$resume_string</h6> -->
+                                <h6><?php echo $resume_string ?></h6>
                                 <br>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class='col-md-8'>
+            <div class='col-md-8 mt-2 mb-2'>
                 <div class='card'>
                     <div class='card-body' style='padding: 0;'>
                         <div style='padding: 1rem;'>
@@ -74,8 +81,8 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
                                 <br>
                                 <p>
                                     Our current global predicament hampers our ability to engage with one another in meaningful ways. It also obstructs personal and professional development. This website is meant to be used as
-                                    a virtual community, for students to meet one another and for recruiters to appreciate our talents and capabilities. If you run into any bugs or errors, please feel free to send me an email! 
-                                    <i>The link is to your left!</i>
+                                    a virtual community, for students to meet one another and for recruiters to appreciate our talents and capabilities. If you run into any bugs or errors, please feel free to send an email!
+                                    <i><?php echo $email_string ?></i>
                                 </p>
                                 <br>
                                 <?php echo $hometown_string .
@@ -88,12 +95,10 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
                 </div>
             </div>
         </div>
-
     </div>
+</div>
 
 
-
-
-    <?php
-    include("includes/footer.php");
-    ?>
+<?php
+include("includes/footer.php");
+?>
