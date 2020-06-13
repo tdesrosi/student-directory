@@ -55,40 +55,87 @@ if (isset($_SESSION['username'])) {
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
                                         $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         echo $initialPhotoDestination;
-
+                                        
                                         //New image manipulation object
                                         //Have to manipulate and then reupload to bucket
-                                        $im = new ImageManipulator("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftechcrunch.com%2F2015%2F12%2F01%2Fgoogle-turns-image-search-into-pinterest-with-new-collections-feature%2F&psig=AOvVaw1wBfjahvfzGhDM3nptxnEb&ust=1592161070943000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLCNxKu8_-kCFQAAAAAdAAAAABAD");
-                                        //croping algorithm
-                                        $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
-                                        $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
-
-                                        $getWidth = round($im->getWidth());
-                                        $getHeight = round($im->getHeight());
-
-                                        $x1 = 0;
-                                        $x2 = 0;
-                                        $y1 = 100;
-                                        $y2 = 100;
-
-                                        if ($getWidth === $lgDimmension) {
-                                            $x1 = ($getWidth - $getHeight) / 2;
-                                            $y1 = 0;
-                                            $x2 = $getWidth - ($getWidth - $getHeight) / 2;
-                                            $y2 = $getHeight;
-                                        } else if ($getHeight === $lgDimmension) {
+                                        if($fileActualExt == 'png') {
+                                            $im = imagecreatefrompng(file_get_contents($initialPhotoDestination));
+                                            $lgDimmension =  max(imagesx($im), imagesy($im));
+                                            $smDimmension = min(imagesx($im), imagesy($im));
+    
+                                            $getWidth = round(imagesx($im));
+                                            $getHeight = round(imagesy($im));
+    
                                             $x1 = 0;
-                                            $y1 = ($getHeight - $getWidth) / 2;
-                                            $x2 = $getWidth;
-                                            $y2 = $getHeight - ($getHeight - $getWidth) / 2;
-                                        }
+                                            $x2 = 0;
+                                            $y1 = 100;
+                                            $y2 = 100;
+    
+                                            if ($getWidth === $lgDimmension) {
+                                                $x1 = ($getWidth - $getHeight) / 2;
+                                                $y1 = 0;
+                                                $x2 = $getWidth - ($getWidth - $getHeight) / 2;
+                                                $y2 = $getHeight;
 
-                                        //crop and save image to new folder
-                                        $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
-                                        $im->save($nitialPhotoDestination);
-                                        echo $initialPhotoDestination;
-                                        var_dump($im);
-                                        //try uploading into bucket again, after cropping
+                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
+                                                if ($im2 !== FALSE) {
+                                                      $newImage = imagepng($im2); 
+                                                    imagedestroy($im2); 
+                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
+                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                                    echo $finalPhotoDestination;
+                                                } 
+                                               
+
+                                            } else if ($getHeight === $lgDimmension) {
+                                                $x1 = 0;
+                                                $y1 = ($getHeight - $getWidth) / 2;
+                                                $x2 = $getWidth;
+                                                $y2 = $getHeight - ($getHeight - $getWidth) / 2;
+
+                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
+                                                if ($im2 !== FALSE) {
+                                                    $newImage = imagepng($im2); 
+                                                  imagedestroy($im2); 
+                                                  $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
+                                                  $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
+                                                  echo $finalPhotoDestination;
+                                              } 
+
+                                            }
+
+                                        } else {
+                                            $im = imagecreatefromjpeg(file_get_contents($initialPhotoDestination));
+                                            $lgDimmension =  max(imagesx($im), imagesy($im));
+                                            $smDimmension = min(imagesx($im), imagesy($im));
+    
+                                            $getWidth = round(imagesx($im));
+                                            $getHeight = round(imagesy($im));
+    
+                                            $x1 = 0;
+                                            $x2 = 0;
+                                            $y1 = 100;
+                                            $y2 = 100;
+    
+                                            if ($getWidth === $lgDimmension) {
+                                                $x1 = ($getWidth - $getHeight) / 2;
+                                                $y1 = 0;
+                                                $x2 = $getWidth - ($getWidth - $getHeight) / 2;
+                                                $y2 = $getHeight;
+
+                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
+
+                                            } else if ($getHeight === $lgDimmension) {
+                                                $x1 = 0;
+                                                $y1 = ($getHeight - $getWidth) / 2;
+                                                $x2 = $getWidth;
+                                                $y2 = $getHeight - ($getHeight - $getWidth) / 2;
+
+                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
+
+                                            }
+                                        }
+                                       
                                         try {
                                             // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                             $finalUpload = $s3->upload($bucket, $fileName, fopen($initialPhotoDestination, 'rb'), 'public-read');
@@ -101,14 +148,18 @@ if (isset($_SESSION['username'])) {
                                             header("Location: profile.php?uploadsuccess");
                                         } catch (Exception $e) { ?>
                                             <p>Final Upload error :(</p>
-                                        <?php }
+                                        <?php 
+                                        } ?>
 
-                                        ?>
+
+
+
+
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
                                     } catch (Exception $e) { ?>
                                         <p>Initial Upload error :(</p>
-                <?php }
+                                    <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
