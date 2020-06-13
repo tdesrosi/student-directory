@@ -8,7 +8,7 @@ $s3 = new Aws\S3\S3Client([
     'region'   => 'us-east-1',
 ]);
 $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in found in env!');
-
+$finalImage = "";
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
@@ -37,7 +37,7 @@ if (isset($_SESSION['username'])) {
                     $fileSize = $_FILES['photoUpload']['size'];
                     $fileError = $_FILES['photoUpload']['error'];
                     $fileType = $_FILES['photoUpload']['name'];
-                    
+
                     $fileExt = explode('.', $fileName);
                     $fileActualExt = strtolower(end($fileExt));
                     $allowed = array('png', 'jpg', 'jpeg');
@@ -50,10 +50,14 @@ if (isset($_SESSION['username'])) {
                         if (in_array($fileActualExt, $allowed)) {
                             if ($fileError === 0) {
                                 if ($fileSize < 2000000) {
-                                    $fileNameNew = $username . "." . $fileActualExt;
+                                    $fileNameNew = uniqid('', true) . "." . $fileActualExt;
+                                    $fileDestination = 'uploads/images/' . $fileNameNew;
+                                    move_uploaded_file($fileTmpName, $fileDestination);
 
                                     //New image manipulation object
-                                    $im = new ImageManipulator($fileTmpName);
+                                    $im = new ImageManipulator($fileDestination);
+
+                                    
 
                                     //croping algorithm
                                     $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
@@ -81,20 +85,22 @@ if (isset($_SESSION['username'])) {
 
                                     //crop and save image to new folder
                                     $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
+                                    $im->save($fileTmpName);
+
                                     //try uploading into bucket
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                                        $upload = $s3->upload($bucket, $_FILES['photoUpload']['name'], fopen($_FILES['photoUpload']['tmp_name'], 'rb'), 'public-read');
+                                        $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
 
                                         $photoDestination = htmlspecialchars($upload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET profile_pic='$photoDestination' WHERE username='$userLoggedIn'");
-                                    ?>
+                ?>
                                         <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
                                         header("Location: profile.php?uploadsuccess");
                                     } catch (Exception $e) { ?>
                                         <p>Upload error :(</p>
-                                    <?php }
+                <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
@@ -133,7 +139,7 @@ if (isset($_SESSION['username'])) {
                                     //try uploading into bucket
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                                        $upload = $s3->upload($bucket, $_FILES['resumeUpload']['name'], fopen($_FILES['resumeUpload']['tmp_name'], 'rb'), 'public-read');
+                                        $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
 
                                         $fileDestination = htmlspecialchars($upload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET resume_='$fileDestination' WHERE username='$userLoggedIn'");
