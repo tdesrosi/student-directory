@@ -70,7 +70,7 @@ img {
 .search-dropdown {
     background-color: #f8f9fa;
     text-align: left;
-    z-index: 1;
+    z-index: 3;
     position: fixed;
     min-width: 450px;
     width: 500px;
