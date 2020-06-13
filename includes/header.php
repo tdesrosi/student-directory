@@ -46,7 +46,7 @@ if (isset($_SESSION['username'])) {
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;" action="search.php" method="POST" name="search_form">
-                    <input name="q" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" id="search_text_input">
+                    <input name="q" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" onkeydown="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" id="search_text_input">
                     <div class="button_holder">
                         <button id="nav_search_button" class="btn" style="display: none;"> </button>
                     </div>

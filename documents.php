@@ -5,10 +5,12 @@ include("includes/header.php");
 
 <div style="width: 100%; height: 100%; ">
     <div class="container-fluid" style="padding: 20px auto; ">
-        <div class="card" style="margin: 10% auto; max-width: 500px; text-align: center;">
+        <div class="card col-lg-6" style="margin: 10% auto; min-width: 500px; text-align: center;">
             <div class="contents" style="padding: 2%">
                 <h3>Manage Documents</h3>
+                <br>
                 <p>Submit your profile picture and resume here. Photos can only be in .png, .jpg, or .jpeg formats. Resumes can only be in .doc, .docx, and .pdf formats. When finished, click the button at the bottom to go back to your profile page.</p>
+                <br>
                 <form action="profile.php" method="POST" enctype="multipart/form-data">
                     <!-- UPLOAD PROFILE IMAGE HERE -->
                     <div class="input-group">
@@ -33,6 +35,7 @@ include("includes/header.php");
                         </div>
                     </div>
                 </form>
+                <br>
                 <a class="btn btn-outline-warning" href="<?php echo $userLoggedIn ?>">Done!</a>
 
             </div>

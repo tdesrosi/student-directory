@@ -13,7 +13,7 @@ $personal_statement = "";
 $phone_number = "";
 $error_array = array();
 
-if (isset($_POST['profile_change_button']) || isset($_POST['submit-file'])) {
+if (isset($_POST['profile_change_button'])) {
 
     //Registration form values
     $hometown = strip_tags($_POST['reg_hometown']); //remove tags

@@ -1,5 +1,7 @@
 <?php
 include('includes/header.php');
+include('includes/form_handlers/profile_change_handler.php');
+include("includes/classes/Profile.php");
 
 if (isset($_GET['profile_username'])) {
     $username = $_GET['profile_username'];
@@ -9,33 +11,32 @@ if (isset($_GET['profile_username'])) {
     if ($username != $userLoggedIn) {
         $headerRedirect = "Location: user.php/?profile_username=" . $username;
         header($headerRedirect);
-    } else {
-
-        $username = $_SESSION['username'];
-        $user_data_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
-        $row = mysqli_fetch_array($user_data_query);
-
-        $name = $row['first_name'] . " " . $row['last_name'];
-        $email_sharing = $row['email_sharing'];
-        $profile_pic = $row['profile_pic'];
-        $hometown = $row['hometown'];
-        $owen_classof = $row['owen_classof'];
-        $owen_program = $row['owen_program'];
-        $undergrad_institution = $row['undergrad_institution'];
-        $undergrad_major = $row['undergrad_major'];
-        $fun_fact = $row['fun_fact'];
-        $social_media = $row['social_media'];
-        $resume_ = $row['resume_'];
-        $personal_statement = $row['personal_statement'];
-        $phone_number = $row['phone_number'];
-        $signup_date = $row['signup_date'];
     }
 }
+
+$username = $_SESSION['username'];
+$user_data_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
+$row = mysqli_fetch_array($user_data_query);
+
+$name = $row['first_name'] . " " . $row['last_name'];
+$email_sharing = $row['email_sharing'];
+$profile_pic = $row['profile_pic'];
+$hometown = $row['hometown'];
+$owen_classof = $row['owen_classof'];
+$owen_program = $row['owen_program'];
+$undergrad_institution = $row['undergrad_institution'];
+$undergrad_major = $row['undergrad_major'];
+$fun_fact = $row['fun_fact'];
+$social_media = $row['social_media'];
+$resume_ = $row['resume_'];
+$personal_statement = $row['personal_statement'];
+$phone_number = $row['phone_number'];
+$signup_date = $row['signup_date'];
 
 
 ?>
 
-<div style='margin: 4% 7%'>
+<div style='margin: 7% 7%'>
     <div class='container-fluid row'>
         <div class='col-md-4'>
             <div class='card'>
@@ -58,7 +59,7 @@ if (isset($_GET['profile_username'])) {
         <div class='col-md-8'>
             <div class='card'>
                 <div class='card-body' style='padding: 0;'>
-                    <div style='padding: 1rem;'>
+                    <div style='padding: 1rem; text-align: center;'>
                         <div class='poster_info'>
                             <h1>Hi! I'm <?php echo $row['first_name']; ?> </h1>
                             <br>
@@ -67,12 +68,12 @@ if (isset($_GET['profile_username'])) {
                             <a class="btn btn-outline-warning" href="documents.php">Change profile picture and upload a resume here!</a>
 
                         </div>
-                        <div class='card_body'>
+                        <div class='form-group'>
                             <form action="profile.php" method="POST" class="form-group" name="main-form" enctype="multipart/form-data">
+                                <br>
                                 <label for="reg_owen_classof">What year do you graduate from Owen?</label>
                                 <input type="number" name="reg_owen_classof" placeholder="Owen Graduation Year" value="<?php echo $owen_classof ?>">
                                 <br>
-
                                 <!-- Owen Program -->
                                 <label for="reg_owen_program">What's your program at Owen?</label>
                                 <br>
@@ -144,10 +145,7 @@ if (isset($_GET['profile_username'])) {
                                 <!-- Submit Button -->
                                 <input type="submit" name="profile_change_button" value="Save Changes" class="mb-5">
                                 <br>
-                                <?php
-                                if (isset($message)) echo "
-                    <h1 style='color: blue;'>$message</h1>
-                    "
+                                <?php if (isset($message)) echo "<h1 style='color: blue;'>$message</h1>";
                                 ?>
                             </form>
                         </div>
@@ -156,3 +154,8 @@ if (isset($_GET['profile_username'])) {
             </div>
         </div>
     </div>
+</div>
+
+<?php
+include("includes/footer.php");
+?>
