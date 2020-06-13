@@ -60,7 +60,6 @@ if (isset($_SESSION['username'])) {
                                     ?>
                                         <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
-                                        header("Location: profile.php?uploadsuccess");
                                     } catch (Exception $e) { ?>
                                         <p>Upload error :(</p>
                                     <?php }
@@ -95,8 +94,21 @@ if (isset($_SESSION['username'])) {
                                     $im->crop($x1, $y1, $x2, $y2); // takes care of out of boundary conditions automatically
                                     $im->save($photoDestination);
 
-                                    //try uploading into bucket
-                                    
+                                    //try uploading into bucket again, after cropping
+                                    try {
+                                        // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
+                                        $upload = $s3->upload($bucket, $fileName, fopen($photoDestination, 'rb'), 'public-read');
+
+                                        $croppedPhotoDestination = htmlspecialchars($upload->get('ObjectURL'));
+                                        echo $croppedPhotoDestination;
+                                        $query = mysqli_query($con, "UPDATE users SET profile_pic='$croppedPhotoDestination' WHERE username='$userLoggedIn'");
+                                    ?>
+                                        <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
+                                    <?php
+                                        header("Location: profile.php?uploadsuccess");
+                                    } catch (Exception $e) { ?>
+                                        <p>Upload error :(</p>
+                                    <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
