@@ -56,7 +56,7 @@ if (isset($_SESSION['username'])) {
                                         $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         //New image manipulation object
                                         //Have to manipulate and then reupload to bucket
-                                        $im = new ImageManipulator($initialPhotoDestination);
+                                        $im = new ImageManipulator("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftechcrunch.com%2F2015%2F12%2F01%2Fgoogle-turns-image-search-into-pinterest-with-new-collections-feature%2F&psig=AOvVaw1wBfjahvfzGhDM3nptxnEb&ust=1592161070943000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLCNxKu8_-kCFQAAAAAdAAAAABAD");
                                         //croping algorithm
                                         $lgDimmension =  max(round($im->getWidth()), round($im->getHeight()));
                                         $smDimmension = min(round($im->getWidth()), round($im->getHeight()));
@@ -105,7 +105,7 @@ if (isset($_SESSION['username'])) {
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
                                     } catch (Exception $e) { ?>
-                                        <p>Inial Upload error :(</p>
+                                        <p>Initial Upload error :(</p>
                 <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
