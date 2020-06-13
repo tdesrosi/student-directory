@@ -48,7 +48,7 @@ class GetPage
         $undergrad_major = $row['undergrad_major'];
         $fun_fact = $row['fun_fact'];
         $social_media = $row['social_media'];
-        $resume_ = "../" . $row['resume_'];
+        $resume_ = $row['resume_'];
         $phone_number = $row['phone_number'];
         $hometown = $row['hometown'];
         $signup_date = $row['signup_date'];
@@ -105,7 +105,7 @@ class GetPage
             $social_media_string= "<a href=https://" . $social_media . " target='_blank'>Visit Me on Linkedin!</a>";
         }
         $resume_string = "";
-        if($resume_ != "../") {
+        if($resume_ != "") {
             $resume_string = "<a href=" . $resume_ . ">Download my resume!</a>";
         }
         $tel_string = "";
@@ -142,8 +142,7 @@ class GetPage
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>
                                         <br>
-                                        $resume_
-                                        <h6><small style='opacity: 0.2;'><i> Account Created on $signup_date </i></small></h6>
+                                        <h6><small style='opacity: 0.4;'><i> Account Created on $signup_date </i></small></h6>
                                     </div>
                                 </div>
                             </div>
