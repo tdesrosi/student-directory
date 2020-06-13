@@ -36,7 +36,7 @@ class GetPage
         $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$username'");
         $row = mysqli_fetch_array($query);
 
-        $profile_pic =  "../" . $row['profile_pic'];
+        $profile_pic = $row['profile_pic'];
         $email = $row['email'];
         $email_sharing = $row['email_sharing'];
         $name = $row['first_name'] . ' ' . $row['last_name'];
