@@ -37,7 +37,6 @@ if (isset($_SESSION['username'])) {
                     $fileSize = $_FILES['photoUpload']['size'];
                     $fileError = $_FILES['photoUpload']['error'];
                     $fileType = $_FILES['photoUpload']['name'];
-                    var_dump($file);
                     $fileExt = explode('.', $fileName);
                     $fileActualExt = strtolower(end($fileExt));
                     $allowed = array('png', 'jpg', 'jpeg');
@@ -53,121 +52,14 @@ if (isset($_SESSION['username'])) {
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
-                                        $initialPhotoDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
-                                        echo $initialPhotoDestination;
-
-                                        //New image manipulation object
-                                        //Have to manipulate and then reupload to bucket
-                                        if ($fileActualExt == 'png') {
-                                            $im = imagecreatefrompng($initialPhotoDestination);
-                                            $lgDimmension =  max(imagesx($im), imagesy($im));
-                                            $smDimmension = min(imagesx($im), imagesy($im));
-
-                                            $getWidth = round(imagesx($im));
-                                            $getHeight = round(imagesy($im));
-
-                                            $x1 = 0;
-                                            $x2 = 0;
-                                            $y1 = 100;
-                                            $y2 = 100;
-
-                                            if ($getWidth === $lgDimmension) {
-                                                $x1 = ($getWidth - $getHeight) / 2;
-                                                $y1 = 0;
-                                                $x2 = $getWidth - ($getWidth - $getHeight) / 2;
-                                                $y2 = $getHeight;
-
-                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-                                                if ($im2 !== FALSE) {
-                                                    $newImage = imagepng($im2);
-                                                    imagedestroy($im2);
-                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
-                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                                    echo $finalPhotoDestination;
-                                                }
-                                            } else if ($getHeight === $lgDimmension) {
-                                                $x1 = 0;
-                                                $y1 = ($getHeight - $getWidth) / 2;
-                                                $x2 = $getWidth;
-                                                $y2 = $getHeight - ($getHeight - $getWidth) / 2;
-
-                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-                                                if ($im2 !== FALSE) {
-                                                    $newImage = imagepng($im2);
-                                                    imagedestroy($im2);
-                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
-                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                                    echo $finalPhotoDestination;
-                                                }
-                                            }
-                                        } else {
-                                            $im = imagecreatefromjpeg($initialPhotoDestination);
-                                            $lgDimmension =  max(imagesx($im), imagesy($im));
-                                            $smDimmension = min(imagesx($im), imagesy($im));
-
-                                            $getWidth = round(imagesx($im));
-                                            $getHeight = round(imagesy($im));
-
-                                            $x1 = 0;
-                                            $x2 = 0;
-                                            $y1 = 100;
-                                            $y2 = 100;
-
-                                            if ($getWidth === $lgDimmension) {
-                                                $x1 = ($getWidth - $getHeight) / 2;
-                                                $y1 = 0;
-                                                $x2 = $getWidth - ($getWidth - $getHeight) / 2;
-                                                $y2 = $getHeight;
-
-                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-                                                if ($im2 !== FALSE) {
-                                                    $newImage = imagepng($im2);
-                                                    imagedestroy($im2);
-                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
-                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                                    echo $finalPhotoDestination;
-                                                }
-                                            } else if ($getHeight === $lgDimmension) {
-                                                $x1 = 0;
-                                                $y1 = ($getHeight - $getWidth) / 2;
-                                                $x2 = $getWidth;
-                                                $y2 = $getHeight - ($getHeight - $getWidth) / 2;
-
-                                                $im2 = imagecrop($im, ['x' => $x1, 'y' => $y1, 'width' => $x2, 'height' => $y2]);
-                                                if ($im2 !== FALSE) {
-                                                    $newImage = imagepng($im2);
-                                                    imagedestroy($im2);
-                                                    $finalUpload = $s3->upload($bucket, $fileName, $newImage, 'public-read');
-                                                    $finalPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                                    echo $finalPhotoDestination;
-                                                }
-                                            }
-                                        }
-
-                                        try {
-                                            // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
-                                            $finalUpload = $s3->upload($bucket, $fileName, fopen($initialPhotoDestination, 'rb'), 'public-read');
-                                            $croppedPhotoDestination = htmlspecialchars($finalUpload->get('ObjectURL'));
-                                            echo $croppedPhotoDestination;
-                                            $query = mysqli_query($con, "UPDATE users SET profile_pic='$croppedPhotoDestination' WHERE username='$userLoggedIn'");
-                ?>
-                                            <p>Final Upload <a href="<?= htmlspecialchars($finalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
-                                        <?php
-                                            header("Location: profile.php?uploadsuccess");
-                                        } catch (Exception $e) { ?>
-                                            <p>Final Upload error :(</p>
-                                        <?php
-                                        } ?>
-
-
-
-
-
+                                        $fileDestination = htmlspecialchars($initalUpload->get('ObjectURL'));
+                                        $query = mysqli_query($con, "UPDATE users SET profile_pic='$fileDestination' WHERE username='$userLoggedIn'");
+                                        ?>
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initalUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
                                     } catch (Exception $e) { ?>
                                         <p>Initial Upload error :(</p>
-                <?php }
+                                     <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
                             } else
@@ -207,7 +99,6 @@ if (isset($_SESSION['username'])) {
                                     try {
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $upload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
-
                                         $fileDestination = htmlspecialchars($upload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET resume_='$fileDestination' WHERE username='$userLoggedIn'");
                 ?>
