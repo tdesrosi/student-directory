@@ -46,6 +46,7 @@ if (isset($_SESSION['username'])) {
                     $fileExt = explode('.', $fileName);
                     $fileActualExt = strtolower(end($fileExt));
                     $allowed = array('png', 'jpg', 'jpeg');
+                    var_dump($file);
 
                     $email_check = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
                     $row = mysqli_fetch_array($email_check);
@@ -56,14 +57,14 @@ if (isset($_SESSION['username'])) {
                             if ($fileError === 0) {
                                 if ($fileSize < 2000000) {
                                     try {
+                                        $croppedImage = new ImageResize($fileTmpName);
+                                        $croppedImage->crop(200, 200);
+                                        $croppedImage->save($fileTmpName);
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
                                         $fileDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET profile_pic='$fileDestination' WHERE username='$userLoggedIn'");
 
-                                        $croppedImage = new ImageResize($fileDestination);
-                                        $croppedImage->crop(200, 200);
-                                        $croppedImage->save($fileDestination);
                                         ?>
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initialUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php   header("Location: profile.php?uploadsuccess");
