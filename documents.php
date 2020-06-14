@@ -58,7 +58,7 @@ if (isset($_SESSION['username'])) {
                                 if ($fileSize < 2000000) {
                                     try {
                                         $croppedImage = new ImageResize($fileTmpName);
-                                        $croppedImage->crop(200, 200);
+                                        $croppedImage->crop(500, 500, true, ImageResize::CROPCENTER);
                                         $croppedImage->save($fileTmpName);
                                         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
