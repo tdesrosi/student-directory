@@ -35,7 +35,7 @@ class GetPage
         $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$username'");
         $row = mysqli_fetch_array($query);
 
-        $profile_pic = '../' . $row['profile_pic'];
+        $profile_pic = $row['profile_pic'];
         $email = $row['email'];
         $email_sharing = $row['email_sharing'];
         $name = $row['first_name'] . ' ' . $row['last_name'];
@@ -53,6 +53,11 @@ class GetPage
         $signup_date = $row['signup_date'];
 
         //Conditional Loading of Certain Fields (Depending on if they're filled or not)
+        //Picture Loading
+        if ($profile_pic == 'assets/images/profile_pics/defaults/profile_default.png') {
+            $profile_pic == '../' . $profile_pic;
+        }
+
         //Owen Class Formatter
         $owen_classof_string = "";
         if ($owen_classof != 0) {
