@@ -1,5 +1,6 @@
 <?php
 require('../../config/config.php');
+use \Gumlet\ImageResize;
 include("uploadHandling/ImageManipulator.php");
 
 $username = $_SESSION['username'];

@@ -7,6 +7,10 @@ $s3 = new Aws\S3\S3Client([
     'version'  => '2006-03-01',
     'region'   => 'us-east-1',
 ]);
+
+use \Gumlet\ImageResize;
+
+
 $bucket = $_SERVER['BUCKETEER_BUCKET_NAME'] ?: die('No "S3_BUCKET" config var in found in env!');
 $finalImage = "";
 
@@ -28,6 +32,8 @@ if (isset($_SESSION['username'])) {
                 <p>Submit your profile picture and resume here. Photos can only be in .png, .jpg, or .jpeg formats. Resumes can only be in .doc, .docx, and .pdf formats. When finished, click the button at the bottom to go back to your profile page.</p>
                 <br>
 
+
+                <!-- PHOTO UPLOAD SYSTEM -->
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['photoUpload']) && $_FILES['photoUpload']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['photoUpload']['tmp_name'])) {
                     // FIXME: you should add more of your own validation here, e.g. using ext/fileinfo
@@ -54,6 +60,10 @@ if (isset($_SESSION['username'])) {
                                         $initialUpload = $s3->upload($bucket, $fileName, fopen($fileTmpName, 'rb'), 'public-read');
                                         $fileDestination = htmlspecialchars($initialUpload->get('ObjectURL'));
                                         $query = mysqli_query($con, "UPDATE users SET profile_pic='$fileDestination' WHERE username='$userLoggedIn'");
+
+                                        $croppedImage = new ImageResize($fileDestination);
+                                        $croppedImage->crop(200, 200);
+                                        $croppedImage->save($fileDestination);
                                         ?>
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initialUpload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php   header("Location: profile.php?uploadsuccess");
