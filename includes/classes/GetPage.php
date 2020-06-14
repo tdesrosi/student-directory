@@ -55,10 +55,10 @@ class GetPage
         //Conditional Loading of Certain Fields (Depending on if they're filled or not)
         //Picture Loading
         $profile_pic_dir = '';
-        if ($profile_pic == '/assets/images/profile_pics/defaults/profile_default.png') {
-            $profile_pic_dir = '../' . $profile_pic;
-        } else {
+        if (strpos($profile_pic, 'amazonaws') !== false) {
             $profile_pic_dir = $profile_pic;
+        } else {
+            $profile_pic_dir = '../' . $profile_pic;
         }
 
         //Owen Class Formatter
