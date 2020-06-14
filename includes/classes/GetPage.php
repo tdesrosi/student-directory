@@ -54,8 +54,11 @@ class GetPage
 
         //Conditional Loading of Certain Fields (Depending on if they're filled or not)
         //Picture Loading
-        if ($profile_pic == 'assets/images/profile_pics/defaults/profile_default.png') {
-            $profile_pic == '../' . $profile_pic;
+        $profile_pic_dir = '';
+        if ($profile_pic == '/assets/images/profile_pics/defaults/profile_default.png') {
+            $profile_pic_dir = '../' . $profile_pic;
+        } else {
+            $profile_pic_dir = $profile_pic;
         }
 
         //Owen Class Formatter
@@ -129,7 +132,7 @@ class GetPage
                         <div class='card' >
                             <div class='card-body' style='padding: 0;' >
                                 <div class='assets/images/profile_pics/defaults/profile_default.png'>
-                                    <img class='card-img-top' src='$profile_pic'>
+                                    <img class='card-img-top' src='$profile_pic_dir'>
                                 </div>
                                 <div style='padding: 1rem;'>
                                     <div class='poster_info'>
