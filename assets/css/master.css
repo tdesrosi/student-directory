@@ -187,7 +187,4 @@ textarea {
 .profile-sidebar-image {
     border-radius: 0;
     position: relative;
-    border: 1px solid #cccccc;
-    max-width: 100%;
-    max-height: 100%;
 }

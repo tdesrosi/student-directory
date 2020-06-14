@@ -71,7 +71,7 @@ if(isset($_POST['register_button'])){
     if($pw != $pw2){
         array_push($error_array, "Your passwords do not match<br>");
     } else {
-        if (!preg_match('/^[a-z0-9\s]+$/i', $pw)) { 
+        if (!preg_match('/^(?=.*?[0-9])(?=.*[A-Z]).{8,30}$/', $pw)) { 
             array_push($error_array, "Your password can only contain english characters or numbers<br>");
         }  
     }

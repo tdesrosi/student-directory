@@ -31,12 +31,11 @@ class GetPage
         $phone_number = "";   
         $hometown = "";     
 
-
         $username = $this->user['username'];
         $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$username'");
         $row = mysqli_fetch_array($query);
 
-        $profile_pic = $row['profile_pic'];
+        $profile_pic = '../' . $row['profile_pic'];
         $email = $row['email'];
         $email_sharing = $row['email_sharing'];
         $name = $row['first_name'] . ' ' . $row['last_name'];
@@ -52,9 +51,6 @@ class GetPage
         $phone_number = $row['phone_number'];
         $hometown = $row['hometown'];
         $signup_date = $row['signup_date'];
-
-
-
 
         //Conditional Loading of Certain Fields (Depending on if they're filled or not)
         //Owen Class Formatter
@@ -127,8 +123,8 @@ class GetPage
                     <div class='col-md-4' >
                         <div class='card' >
                             <div class='card-body' style='padding: 0;' >
-                                <div class='post_profile_pic'>
-                                    <img class='card-img-top'  src='$profile_pic' >
+                                <div class='assets/images/profile_pics/defaults/profile_default.png'>
+                                    <img class='card-img-top' src='$profile_pic'>
                                 </div>
                                 <div style='padding: 1rem;'>
                                     <div class='poster_info'>
