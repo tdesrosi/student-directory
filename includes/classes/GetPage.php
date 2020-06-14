@@ -28,8 +28,8 @@ class GetPage
         $fun_fact = "";
         $social_media = "";
         $resume_ = "";
-        $phone_number = "";   
-        $hometown = "";     
+        $phone_number = "";
+        $hometown = "";
 
         $username = $this->user['username'];
         $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$username'");
@@ -65,17 +65,17 @@ class GetPage
         $owen_classof_string = "";
         if ($owen_classof != 0) {
             $owen_classof_string = "Class of " . $owen_classof;
-        } 
+        }
         $owen_program_string = "";
         if ($owen_program != "") {
             $owen_program_string = $owen_program;
-        } 
+        }
 
         //Hometown Formatter
         $hometown_string = "";
-        if($hometown != ""){
-            $hometown_string = 
-            '<h6><i>Where are you from?</i></h6>
+        if ($hometown != "") {
+            $hometown_string =
+                '<h6><i>Where are you from?</i></h6>
             <p>' . $hometown . '</p>
             <br>';
         }
@@ -83,43 +83,50 @@ class GetPage
         //Undergraduate Institution Formatter
         $undergrad_major_string = "";
         if ($undergrad_major != "") {
-            $undergrad_major_string = 
-            '<h6><i>What did you study before Owen?</i></h6>
+            $undergrad_major_string =
+                '<h6><i>What did you study before Owen?</i></h6>
             <p>' . $undergrad_major . '</p>
             <br>';
         }
         $undergrad_inst_string = "";
         if ($undergrad_institition != "") {
-            $undergrad_inst_string = 
-            '<h6><i>Where did you study before Owen?</i></h6>
+            $undergrad_inst_string =
+                '<h6><i>Where did you study before Owen?</i></h6>
             <p>' . $undergrad_institition . '</p>
             <br>';
         }
         $fun_fact_string = "";
-        if($fun_fact != ""){
-            $fun_fact_string = 
-            '<h6><i>Fun Fact?</i></h6>
+        if ($fun_fact != "") {
+            $fun_fact_string =
+                '<h6><i>Fun Fact?</i></h6>
             <p>' . $fun_fact . '</p>
             <br>';
-        } 
+        }
 
         //Contact info conditional formatters
         $social_media_string = "";
-        if($social_media != ""){
-            $social_media_string= "<a href=https://" . $social_media . " target='_blank'>Visit Me on LinkedIn!</a>";
+        if ($social_media != "") {
+            if (strpos($social_media, 'https://') !== false) {
+                $social_media_filtered = $social_media;
+                $social_media_string = "<a href=" . $social_media_filtered . " target='_blank'>Visit Me on LinkedIn!</a>";
+            } else {
+                $social_media_filtered =  'https://' . $social_media;
+                $social_media_string = "<a href=" . $social_media_filtered . " target='_blank'>Visit Me on LinkedIn!</a>";
+            }
+            
         }
         $resume_string = "";
-        if($resume_ != "") {
+        if ($resume_ != "") {
             $resume_string = "<a href=" . $resume_ . ">Download my resume!</a>";
         }
         $tel_string = "";
-        if($phone_number != "") {
+        if ($phone_number != "") {
             $tel_string = "<a href=tel:" . $phone_number . ">Give me a phone call!</a>";
         }
         $email_string = "";
-        if($email != "" && $email_sharing == 'yes') {
+        if ($email != "" && $email_sharing == 'yes') {
             $email_string = "<h6><a href=mailto:" . $email . ">Send me an email!</a></h6>";
-        } else if($email_sharing == 'no'){
+        } else if ($email_sharing == 'no') {
             $email_string = "<h6><small><i> The user wishes not to share their email address. </i></small></h6> <br>";
         }
 
