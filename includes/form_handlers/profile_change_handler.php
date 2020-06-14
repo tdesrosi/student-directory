@@ -35,7 +35,7 @@ if (isset($_POST['profile_change_button'])) {
     $fun_fact = str_replace('\n\r', '\n', $fun_fact);
     $_SESSION['reg_fun_fact'] = $fun_fact;
 
-    $social_media = strip_tags($_POST['reg_social_media']);
+    $social_media = strip_tags($_POST['reg_social_media'], $allowable_tags = ':');
     $_SESSION['reg_social_media'] = $social_media;
 
     $personal_statement = strip_tags($_POST['reg_personal_statement']);
