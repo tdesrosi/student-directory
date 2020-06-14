@@ -38,9 +38,6 @@ if (isset($_POST['profile_change_button'])) {
     $social_media = strip_tags($_POST['reg_social_media']);
     $_SESSION['reg_social_media'] = $social_media;
 
-    $resume_ = strip_tags($_POST['reg_resume_']);
-    $_SESSION['reg_resume_'] = $resume_;
-
     $personal_statement = strip_tags($_POST['reg_personal_statement']);
     $personal_statement = str_replace('\n\r', '\n', $personal_statement);
     $_SESSION['reg_personal_statement'] = $personal_statement;

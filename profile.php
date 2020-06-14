@@ -72,13 +72,20 @@ $signup_date = $row['signup_date'];
                             <form action="profile.php" method="POST" class="form-group" name="main-form" enctype="multipart/form-data">
                                 <br>
                                 <label for="reg_owen_classof">What year do you graduate from Owen?</label>
-                                <input type="number" name="reg_owen_classof" placeholder="Owen Graduation Year" value="<?php echo $owen_classof ?>">
+                                <br>
+                                <select name="reg_owen_classof" class="form-control text-center" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
+                                    <option value="" <?php if ($owen_classof == "") echo "selected"; ?>>--Please choose an option--</option>
+                                    <option value="2020" <?php if ($owen_classof == "2020") echo "selected"; ?>>2020</option>
+                                    <option value="2021" <?php if ($owen_classof == "2021") echo "selected"; ?>>2021</option>
+                                    <option value="2022" <?php if ($owen_classof == "2022") echo "selected"; ?>>2022</option>
+                                    <option value="2023" <?php if ($owen_classof == "2023") echo "selected"; ?>>2023</option>
+                                </select>
                                 <br>
                                 <!-- Owen Program -->
                                 <label for="reg_owen_program">What's your program at Owen?</label>
                                 <br>
 
-                                <select name="reg_owen_program" class="form-control text-center" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" placeholder="What program are you a part of?">
+                                <select name="reg_owen_program" class="form-control text-center" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;">
                                     <option value="" <?php if ($owen_program == "") echo "selected"; ?>>--Please choose an option--</option>
                                     <option value="MBA" <?php if ($owen_program == "MBA") echo "selected"; ?>>MBA</option>
                                     <option value="Executive MBA" <?php if ($owen_program == "Executive MBA") echo "selected"; ?>>Executive MBA</option>
@@ -113,7 +120,7 @@ $signup_date = $row['signup_date'];
                                 <input type="text" name="reg_undergrad_major" placeholder="What did you major in?" value="<?php echo $undergrad_major ?>">
                                 <br>
                                 <!-- Fun facts -->
-                                <label for="reg_fun_fact">Share a fun fact about yourself</label>
+                                <label for="reg_fun_fact">Share a fun fact about yourself!</label>
                                 <br>
                                 <textarea rows="5" name="reg_fun_fact" placeholder="Got any fun facts?"><?php echo $fun_fact; ?></textarea>
                                 <br>
@@ -125,7 +132,7 @@ $signup_date = $row['signup_date'];
 
                                 <br>
                                 <!-- Phone Number -->
-                                <label for="reg_phone_number">Would you like to share your phone number?</label>
+                                <label for="reg_phone_number">Phone number:</label>
                                 <input type="tel" class="form-control" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reg_phone_number" value="<?php echo $phone_number; ?>">
                                 <small>Format: XXX-XXX-XXXX</small>
                                 <br>

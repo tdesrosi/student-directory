@@ -36,7 +36,7 @@ if ($resume_ != '') {
 }
 
 //Contact info conditional formatters
-$social_media_string = "<a href='https://www.linkedin.com/in/thomas-desrosiers-407ab7162' target='_blank'>Visit Me on Linkedin!</a>";
+$social_media_string = "<a href='https://www.linkedin.com/in/thomas-desrosiers-407ab7162' target='_blank'>Visit Me on LinkedIn!</a>";
 $tel_string = "<a href='tel:623-521-6596'>Give me a phone call!</a>";
 $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me an email!</a></h6>";
 

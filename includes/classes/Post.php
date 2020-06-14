@@ -59,7 +59,11 @@ class Post
 
                 $personal_statement_string = "";
                 if ($row['personal_statement'] != "") {
-                    $personal_statement_string = substr($row['personal_statement'], 0, 120) . ". . .";
+                    if (strlen($row['personal_statement']) >= 120) {
+                        $personal_statement_string = substr($row['personal_statement'], 0, 120) . "...";
+                    } else {
+                        $personal_statement_string = $row['personal_statement'];
+                    }
                 }
 
                 $str .= "

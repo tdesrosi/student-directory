@@ -102,7 +102,7 @@ class GetPage
         //Contact info conditional formatters
         $social_media_string = "";
         if($social_media != ""){
-            $social_media_string= "<a href=https://" . $social_media . " target='_blank'>Visit Me on Linkedin!</a>";
+            $social_media_string= "<a href=https://" . $social_media . " target='_blank'>Visit Me on LinkedIn!</a>";
         }
         $resume_string = "";
         if($resume_ != "") {
