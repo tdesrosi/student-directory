@@ -20,8 +20,6 @@ include("includes/classes/User.php");
 include("includes/classes/Post.php");
 
 
-
-
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -125,13 +123,19 @@ include("includes/classes/Post.php");
             <div class="sidebar-footer">
                 <a href="https://business.vanderbilt.edu/" target="_blank">
                     <img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
+                    
                 </a>
+                <br>
+                <small style="opacity: 0.5;">
+                    &copy; <?php $thisYear = (int) date('Y');
+                        echo $thisYear ?> Thomas Desrosiers
+                </small>
             </div>
         </nav>
 
         <!-- Profiles -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mt-5" id="main-platform">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mt-5" id="main-platform">
                 <div class="container-fluid mt-1 mb-1">
                     <div class="search-dropdown">
                         <div class="search_results">
