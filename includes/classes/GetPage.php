@@ -27,6 +27,10 @@ class GetPage
         $undergrad_major = "";
         $fun_fact = "";
         $social_media = "";
+        $facebook = "";
+        $twitter = "";
+        $instagram = "";
+        $webpage = "";
         $resume_ = "";
         $phone_number = "";
         $hometown = "";
@@ -47,6 +51,10 @@ class GetPage
         $undergrad_major = $row['undergrad_major'];
         $fun_fact = $row['fun_fact'];
         $social_media = $row['social_media'];
+        $facebook = $row['facebook'];
+        $twitter = $row['twitter'];
+        $instagram = $row['instagram'];
+        $webpage = $row['webpage'];
         $resume_ = $row['resume_'];
         $phone_number = $row['phone_number'];
         $hometown = $row['hometown'];
@@ -113,8 +121,51 @@ class GetPage
                 $social_media_filtered =  'https://' . $social_media;
                 $social_media_string = "<a href=" . $social_media_filtered . " target='_blank'>Visit Me on LinkedIn!</a>";
             }
-            
         }
+
+
+        $facebook_string = "";
+        if ($facebook != "") {
+            if (strpos($facebook, 'https://') !== false) {
+                $facebook_filtered = $facebook;
+                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img src='../assets/images/icons/facebook.png' ></a>";
+            } else {
+                $facebook_filtered =  'https://' . $facebook;
+                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img src='../assets/images/icons/facebook.png' ></a>";
+            } 
+        }
+        $instagram_string = "";
+        if ($instagram != "") {
+            if (strpos($instagram, 'https://') !== false) {
+                $instagram_filtered = $instagram;
+                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'>V<img src='icons/instagram.png' ></a>";
+            } else {
+                $instagram_filtered =  'https://' . $instagram;
+                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'><img src='icons/instagram.png' ></a>";
+            } 
+        }
+        $twitter_string = "";
+        if ($twitter != "") {
+            if (strpos($twitter, 'https://') !== false) {
+                $twitter_filtered = $twitter;
+                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img src='icons/twitter.png' ></a>";
+            } else {
+                $twitter_filtered =  'https://' . $twitter;
+                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img src='icons/twitter.png' ></a>";
+            } 
+        }
+        $webpage_string = "";
+        if ($webpage != "") {
+            if (strpos($webpage, 'https://') !== false) {
+                $webpage_filtered = $webpage;
+                $webpage_string = "<a href=" . $webpage_filtered . " target='_blank'>Visit My Website!</a>";
+            } else {
+                $webpage_filtered =  'https://' . $webpage;
+                $webpage_string = "<a href=" . $webpage_filtered . " target='_blank'>Visit My Website!</a>";
+            } 
+        }
+        
+
         $resume_string = "";
         if ($resume_ != "") {
             $resume_string = "<a href=" . $resume_ . ">Download my resume!</a>";
@@ -130,6 +181,14 @@ class GetPage
             $email_string = "<h6><small><i> The user wishes not to share their email address. </i></small></h6> <br>";
         }
 
+        // Social Media Section Formatting:
+        $social_media_section = '
+            <div class="row" style="display= inline-block;">
+                ' . $facebook_string . '
+                ' . $twitter_string .'
+                ' . $instagram_string . '
+            </div>
+        ';
 
         //final string
         $str .= "
@@ -152,6 +211,8 @@ class GetPage
                                         <h6>$social_media_string</h6>
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>
+                                        <br>
+                                        $social_media_section
                                         <br>
                                         <h6><small style='opacity: 0.4;'><i> Account Created on $signup_date </i></small></h6>
                                     </div>

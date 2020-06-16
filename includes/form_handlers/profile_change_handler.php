@@ -8,6 +8,10 @@ $undergrad_institution = "";
 $undergrad_major = "";
 $fun_fact = "";
 $social_media = "";
+$facebook = "";
+$twitter = "";
+$instagram = "";
+$webpage = "";
 $resume_ = "";
 $personal_statement = "";
 $phone_number = "";
@@ -38,6 +42,18 @@ if (isset($_POST['profile_change_button'])) {
     $social_media = strip_tags($_POST['reg_social_media'], $allowable_tags = ':');
     $_SESSION['reg_social_media'] = $social_media;
 
+    $facebook = strip_tags($_POST['reg_facebook'], $allowable_tags = ':');
+    $_SESSION['reg_facebook'] = $facebook;
+
+    $instagram = strip_tags($_POST['reg_instagram'], $allowable_tags = ':');
+    $_SESSION['reg_instagram'] = $instagram;
+
+    $twitter = strip_tags($_POST['reg_twitter'], $allowable_tags = ':');
+    $_SESSION['reg_twitter'] = $twitter;
+
+    $webpage = strip_tags($_POST['reg_webpage'], $allowable_tags = ':');
+    $_SESSION['reg_webpage'] = $webpage;
+
     $personal_statement = strip_tags($_POST['reg_personal_statement']);
     $personal_statement = str_replace('\n\r', '\n', $personal_statement);
     $_SESSION['reg_personal_statement'] = $personal_statement;
@@ -52,14 +68,6 @@ if (isset($_POST['profile_change_button'])) {
     $row = mysqli_fetch_array($email_check);
     $matched_user = $row['username'];
 
-    // //Handle Errors
-    // if (strlen($hometown > 60 || strlen($hometown) < 3)) {
-    //     array_push($error_array, "You must enter a valid name");
-    // }
-    // if ($owen_classof >= 2050 || $owen_classof <= 2020) {
-    //     array_push($error_array, "You must enter a valid year");
-    // }
-
     if ($matched_user == "" || $matched_user == $userLoggedIn) {
         $message = "Details Updated";
         $query = mysqli_query($con, "UPDATE users SET
@@ -73,7 +81,11 @@ if (isset($_POST['profile_change_button'])) {
             social_media='$social_media',
             resume_='$resume_',
             personal_statement='$personal_statement',
-            phone_number='$phone_number'
+            phone_number='$phone_number',
+            twitter='$twitter',
+            facebook='$facebook',
+            instagram='$instagram',
+            webpage='$webpage'
             WHERE username='$userLoggedIn'
         ");
     } else $message = "That email is already in use!<br><br>";

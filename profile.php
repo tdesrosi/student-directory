@@ -33,6 +33,10 @@ $resume_ = $row['resume_'];
 $personal_statement = $row['personal_statement'];
 $phone_number = $row['phone_number'];
 $signup_date = $row['signup_date'];
+$facebook = $row['facebook'];
+$twitter = $row['twitter'];
+$instagram = $row['instagram'];
+$webpage = $row['webpage'];
 
 
 ?>
@@ -79,10 +83,10 @@ $signup_date = $row['signup_date'];
                                     ';
                                 } else if ($_REQUEST['uploadsuccess'] == 'true_resume') {
                                     echo '
-                                    <h3 style="color: green;">
-                                        <i>Resume Uploaded Successfully!</i>
-                                    </h3>
-                                ';
+                                        <h3 style="color: green;">
+                                            <i>Resume Uploaded Successfully!</i>
+                                        </h3>
+                                    ';
                                 }
                             }
                             ?>
@@ -154,8 +158,27 @@ $signup_date = $row['signup_date'];
                                 <label for="reg_social_media"> Add a link to your Linkedin Profile:</label>
                                 <br>
                                 <input type="text" name="reg_social_media" placeholder="Linkedin Profile URL" value="<?php echo $social_media; ?>">
-
-
+                                <br>
+                                <!-- FACEBOOK -->
+                                <br>
+                                <label for="reg_facebook"> If you would like, you can also add links to your other social media pages:</label>
+                                <br>
+                                <input type="text" name="reg_facebook" placeholder="Facebook URL" value="<?php echo $facebook; ?>">
+                                <br>
+                                <!-- INSTAGRAM -->
+                                <input type="text" name="reg_instagram" placeholder="Instagram Profile URL" value="<?php echo $instagram; ?>">
+                                <br>
+                                <!-- TWITTER -->
+                                <input type="text" name="reg_twitter" placeholder="Twitter Profile URL" value="<?php echo $twitter; ?>">
+                                <br>
+                                <!-- PERSONAL WEBPAGE -->
+                                <br>
+                                <label for="reg_webpage"> If you have a personal website, link it here!</label>
+                                <br>
+                                <input type="text" name="reg_webpage" placeholder="Personal Website URL" value="<?php echo $webpage; ?>">
+                                <br>
+                                <small style="opacity: 0.4;"><i>And if you do not have one and would like one, <a href="mailto:thomas.l.desrosiers@vanderbilt.edu">we should talk.</a></i></small>
+                                <br>
                                 <br>
                                 <!-- Phone Number -->
                                 <label for="reg_phone_number">Phone number:</label>
