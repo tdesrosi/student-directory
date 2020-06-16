@@ -102,15 +102,15 @@ $signup_date = $row['signup_date'];
 
 							<h4>Change Password</h4>
 							<form action="settings.php" method="POST">
-								<label for="old_password">First Name:</label>
+								<label for="old_password">Old Password:</label>
 								<br>
 								<input type="password" name="old_password" id="settings_input">
 								<br>
-								<label for="new_password_1">First Name:</label>
+								<label for="new_password_1">New Password:</label>
 								<br>
 								<input type="password" name="new_password_1" id="settings_input">
 								<br>
-								<label for="new_password_2">First Name:</label>
+								<label for="new_password_2">Confirm New Password:</label>
 								<br>
 								<input type="password" name="new_password_2" id="settings_input">
 								<br>
@@ -121,6 +121,7 @@ $signup_date = $row['signup_date'];
 							</form>
 
 							<h4>Close Account</h4>
+							<br>
 							<form action="settings.php" method="POST">
 								<input type="submit" name="close_account" id="close_account" value="Close Account" class="danger settings_submit">
 							</form>
