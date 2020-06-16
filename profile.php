@@ -74,13 +74,13 @@ $signup_date = $row['signup_date'];
                                 if ($_REQUEST['uploadsuccess'] == 'true_photo') {
                                     echo '
                                         <h3 style="color: green;">
-                                            <i>Profile Picture Changed Successful!</i>
+                                            <i>Profile Picture Changed Successfully!</i>
                                         </h3>
                                     ';
                                 } else if ($_REQUEST['uploadsuccess'] == 'true_resume') {
                                     echo '
                                     <h3 style="color: green;">
-                                        <i>Resume Uploaded Successful!</i>
+                                        <i>Resume Uploaded Successfully!</i>
                                     </h3>
                                 ';
                                 }
