@@ -128,32 +128,33 @@ class GetPage
         if ($facebook != "") {
             if (strpos($facebook, 'https://') !== false) {
                 $facebook_filtered = $facebook;
-                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img src='../assets/images/icons/facebook.png' ></a>";
+                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/facebook.png' ></a>";
             } else {
                 $facebook_filtered =  'https://' . $facebook;
-                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img src='../assets/images/icons/facebook.png' ></a>";
+                $facebook_string = "<a href=" . $facebook_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/facebook.png' ></a>";
             } 
         }
         $instagram_string = "";
         if ($instagram != "") {
             if (strpos($instagram, 'https://') !== false) {
                 $instagram_filtered = $instagram;
-                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'>V<img src='icons/instagram.png' ></a>";
+                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/instagram.png' ></a>";
             } else {
                 $instagram_filtered =  'https://' . $instagram;
-                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'><img src='icons/instagram.png' ></a>";
+                $instagram_string = "<a href=" . $instagram_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/instagram.png' ></a>";
             } 
         }
         $twitter_string = "";
         if ($twitter != "") {
             if (strpos($twitter, 'https://') !== false) {
                 $twitter_filtered = $twitter;
-                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img src='icons/twitter.png' ></a>";
+                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/twitter.png' ></a>";
             } else {
                 $twitter_filtered =  'https://' . $twitter;
-                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img src='icons/twitter.png' ></a>";
+                $twitter_string = "<a href=" . $twitter_filtered . " target='_blank'><img style='width: 32px; height: 32px; padding: 2px;' class='social-media' src='../assets/images/icons/twitter.png' ></a>";
             } 
         }
+        
         $webpage_string = "";
         if ($webpage != "") {
             if (strpos($webpage, 'https://') !== false) {
@@ -183,7 +184,7 @@ class GetPage
 
         // Social Media Section Formatting:
         $social_media_section = '
-            <div class="row" style="display= inline-block;">
+            <div style="display= inline-block;">
                 ' . $facebook_string . '
                 ' . $twitter_string .'
                 ' . $instagram_string . '
@@ -211,6 +212,7 @@ class GetPage
                                         <h6>$social_media_string</h6>
                                         <h6>$tel_string</h6>
                                         <h6>$resume_string</h6>
+                                        <h6>$webpage_string</h6>
                                         <br>
                                         $social_media_section
                                         <br>

@@ -1,5 +1,5 @@
 /*
- * Sidebar
+ * Main Stylesheet
  */
 body{
     margin-bottom: 50px;
@@ -187,4 +187,10 @@ textarea {
 .profile-sidebar-image {
     border-radius: 0;
     position: relative;
+}
+
+.social-media {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 1px;
 }
