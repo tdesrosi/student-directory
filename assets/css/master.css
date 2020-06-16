@@ -203,12 +203,13 @@ textarea {
 }
 
 .sidebar-footer {
-    margin-top: -150px;
+    margin-top: -180px;
     height: 200px;
     position: relative;
-    line-height: 180%;
-    padding: 0 10px;
+    line-height: 200%;
+    padding: 0 30px;
     text-align: center;
+    box-sizing: unset;
 }
 
 .card {

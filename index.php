@@ -123,12 +123,11 @@ include("includes/classes/Post.php");
             <div class="sidebar-footer">
                 <a href="https://business.vanderbilt.edu/" target="_blank">
                     <img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
-                    
                 </a>
                 <br>
                 <small style="opacity: 0.5;">
                     &copy; <?php $thisYear = (int) date('Y');
-                        echo $thisYear ?> Thomas Desrosiers
+                            echo $thisYear ?> Thomas Desrosiers
                 </small>
             </div>
         </nav>
