@@ -113,8 +113,8 @@ require 'includes/form_handlers/login_handler.php';
                     <br>
                     <?php if (in_array("Your passwords do not match<br>", $error_array))
                         echo "Your passwords do not match<br>";
-                    else if (in_array("Your password can only contain english characters or numbers<br>", $error_array))
-                        echo "Your password can only contain english characters or numbers<br>";
+                    else if (in_array("Your password can only contain English characters or numbers<br>", $error_array))
+                        echo "Your password can only contain English characters or numbers<br>";
                     else if (in_array("Your password must be between 8 and 30 characters<br>", $error_array))
                         echo "Your password must be between 8 and 30 characters<br>"; ?>
 

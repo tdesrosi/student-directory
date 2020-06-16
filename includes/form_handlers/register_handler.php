@@ -37,6 +37,7 @@ if(isset($_POST['register_button'])){
     $pw2 = strip_tags($_POST['reg_password2']); //remove tags
    
     $date = date("Y-m-d"); //gets current date
+    $pattern = '/^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/';
 
     if($email == $email2) {
         //check if email is valid format
@@ -71,8 +72,8 @@ if(isset($_POST['register_button'])){
     if($pw != $pw2){
         array_push($error_array, "Your passwords do not match<br>");
     } else {
-        if (!preg_match('/^(?=.*?[0-9])(?=.*[A-Z]).{8,30}$/', $pw)) { 
-            array_push($error_array, "Your password can only contain english characters or numbers<br>");
+        if (preg_match($pattern, $pw) === false) { 
+            array_push($error_array, "Your password can only contain English characters or numbers<br>");
         }  
     }
 

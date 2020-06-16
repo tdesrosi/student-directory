@@ -52,15 +52,15 @@ include("includes/classes/Post.php");
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="includes/handlers/logout.php">
-                            <span data-feather="file"></span>
-                            Log Out
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="settings.php">
                             <span data-feather="file"></span>
                             Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="includes/handlers/logout.php">
+                            <span data-feather="file"></span>
+                            Log Out
                         </a>
                     </li>
                 </ul> ';

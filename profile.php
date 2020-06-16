@@ -50,6 +50,12 @@ $signup_date = $row['signup_date'];
                         <div class='poster_info'>
                             <h3><?php echo $name ?></h3>
                             <br>
+                            <a class="btn btn-danger" href="settings.php">
+                                <span data-feather="file"></span>
+                                Advanced account settings
+                            </a>
+                            <br>
+                            <br>
                             <h6><small style='opacity: 0.2;'><i> Account Created on <?php echo $signup_date ?></i></small></h6>
                         </div>
                     </div>
