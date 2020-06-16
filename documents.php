@@ -46,7 +46,6 @@ if (isset($_SESSION['username'])) {
                     $fileExt = explode('.', $fileName);
                     $fileActualExt = strtolower(end($fileExt));
                     $allowed = array('png', 'jpg', 'jpeg');
-                    var_dump($file);
 
                     $email_check = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
                     $row = mysqli_fetch_array($email_check);
