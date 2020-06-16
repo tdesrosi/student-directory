@@ -29,7 +29,10 @@ include("includes/classes/Post.php");
             <div class="sidebar-sticky pt-3">
                 <div class="user_details column">
                     <!-- Profile Image -->
-                    <a class="profile-sidebar-image cropped"> <img src="<?php echo $user['profile_pic']; ?>" alt=""> </a>
+                    <?php if (isset($_SESSION['username']))
+                        echo '
+                    <a class="profile-sidebar-image cropped"> <img src="' . $user['profile_pic'] . '" alt=""> </a>
+                    '; ?>
                 </div>
 
                 <!-- Sidebar -->
@@ -69,12 +72,18 @@ include("includes/classes/Post.php");
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <div class="nav-link">
+                                <h3>
+                                    Welcome, Guest!   
+                                </h3>
+                                <br>
+                                <small>
+                                    <i style="opacity: 0.5;" >If you are a student, be sure to <a href="register.php">register and create an account.</a></i>
+                                </small>
+                                <br>
+                                <br>
                                 <h5>
-                                    Welcome, Guest!
+                                    If you have any issues, be sure to contact us to report any bugs you may run into.
                                 </h5>
-                                <p>
-                                    If you are a student, be sure to register and create your account. To everyone else, hello and welcome to our site! If you have any issues, be sure to contact us to report any bugs you may run into.
-                                </p>
                             </div>
                         </li>
                     </ul>
@@ -113,6 +122,11 @@ include("includes/classes/Post.php");
                     </li>
                 </ul>
             </div>
+            <div class="sidebar-footer">
+                <a href="https://business.vanderbilt.edu/" target="_blank">
+                    <img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
+                </a>
+            </div>
         </nav>
 
         <!-- Profiles -->
@@ -145,35 +159,29 @@ include("includes/classes/Post.php");
                 $(function() {
                     var loadCards = function() {
                         $('#loading').show();
-
                         //Original ajax request for loading first posts 
                         $.ajax({
                             url: "includes/handlers/ajax_load_posts.php",
                             type: "POST",
                             data: "page=1&order_by=" + order_by,
                             cache: false,
-
                             success: function(data) {
                                 $('#loading').hide();
                                 $('.posts_area').html(data);
                             }
                         });
-
                         $(window).scroll(function() {
                             var height = $('.posts_area').height(); //Div containing posts
                             var scroll_top = $(this).scrollTop();
                             var page = $('.posts_area').find('.nextPage').val();
                             var noMorePosts = $('.posts_area').find('.noMorePosts').val();
-
                             if ((document.body.scrollHeight == document.body.scrollTop + window.innerHeight) && noMorePosts == 'false') {
                                 $('#loading').show();
-
                                 var ajaxReq = $.ajax({
                                     url: "includes/handlers/ajax_load_posts.php",
                                     type: "POST",
                                     data: "page=" + page + "&order_by=" + order_by,
                                     cache: false,
-
                                     success: function(response) {
                                         $('.posts_area').find('.nextPage').remove(); //Removes current .nextpage 
                                         $('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage 
@@ -182,22 +190,12 @@ include("includes/classes/Post.php");
                                         $('.posts_area').append(response);
                                     }
                                 });
-
                             } //End if 
-
                             return false;
-
                         }); //End (window).scroll(function())
-
-
                         $('.reorder').on('click', loadCards);
-
                     };
                     $(document).ready(loadCards);
-
-
-
-
                 });
             </script>
 

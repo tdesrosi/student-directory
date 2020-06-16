@@ -194,3 +194,11 @@ textarea {
     height: 32px !important;
     padding: 1px;
 }
+
+.sidebar-footer{
+    margin-top:-150px;
+    height:200px;
+    position:relative;
+    line-height:180%;
+    padding:0 10px;
+  }
