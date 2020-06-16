@@ -13,6 +13,10 @@ if (isset($_GET['profile_username'])) {
         header($headerRedirect);
     }
 }
+if (isset($_REQUEST['uploadsuccess'])) {
+    $banner = "File Upload Success!";
+}
+
 
 $username = $_SESSION['username'];
 $user_data_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
@@ -67,6 +71,17 @@ $signup_date = $row['signup_date'];
                 <div class='card-body' style='padding: 0;'>
                     <div style='padding: 1rem; text-align: center;'>
                         <div class='poster_info'>
+                            <!-- Banner Message -->
+                            <?php
+                                if (isset($_REQUEST['uploadsuccess'])){
+                                    echo '
+                                        <h3>
+                                            <i>Upload Successful!</i>
+                                        </h3>
+                                    ';
+                                }
+                            ?>
+
                             <h1>Hi! I'm <?php echo $row['first_name']; ?> </h1>
                             <br>
                             <h3>Use this page to edit your user details.</h3>

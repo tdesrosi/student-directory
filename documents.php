@@ -67,9 +67,9 @@ if (isset($_SESSION['username'])) {
 
                                         ?>
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initialUpload->get('ObjectURL')) ?>">successful</a> :)</p>
-                                    <?php   header("Location: profile.php?uploadsuccess");
+                                    <?php   header("Location: profile.php?uploadsuccess=true");
                                     } catch (Exception $e) { ?>
-                                        <p>Initial Upload error :(</p>
+                                        <p>Upload error! Make sure your file isn't too large or the wrong format.</p>
                                      <?php }
                                 } else
                                     echo "Your file is too big to upload, try smaller than 1MB.";
@@ -92,7 +92,6 @@ if (isset($_SESSION['username'])) {
                     $fileSize = $_FILES['resumeUpload']['size'];
                     $fileError = $_FILES['resumeUpload']['error'];
                     $fileType = $_FILES['resumeUpload']['name'];
-                    var_dump($file);
                     $fileExt = explode('.', $fileName);
                     $fileActualExt = strtolower(end($fileExt));
                     $allowed = array('doc', 'docx', 'pdf');
@@ -115,9 +114,9 @@ if (isset($_SESSION['username'])) {
                 ?>
                                         <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
-                                        header("Location: profile.php?uploadsuccess");
+                                        header("Location: profile.php?uploadsuccess=true");
                                     } catch (Exception $e) { ?>
-                                        <p>Upload error :(</p>
+                                        <p>Upload error! Make sure your file isn't too large or the wrong format.</p>
                 <?php }
                                 } else {
                                     echo "Your file is too big to upload, try smaller than 1MB.";
