@@ -13,9 +13,6 @@ if (isset($_GET['profile_username'])) {
         header($headerRedirect);
     }
 }
-if (isset($_REQUEST['uploadsuccess'])) {
-    $banner = "File Upload Success!";
-}
 
 
 $username = $_SESSION['username'];
@@ -73,13 +70,21 @@ $signup_date = $row['signup_date'];
                         <div class='poster_info'>
                             <!-- Banner Message -->
                             <?php
-                                if (isset($_REQUEST['uploadsuccess'])){
+                            if (isset($_REQUEST['uploadsuccess'])) {
+                                if ($_REQUEST['uploadsuccess'] == 'true_photo') {
                                     echo '
-                                        <h3>
-                                            <i>Upload Successful!</i>
+                                        <h3 style="color: green;">
+                                            <i>Profile Picture Changed Successful!</i>
                                         </h3>
                                     ';
+                                } else if ($_REQUEST['uploadsuccess'] == 'true_resume') {
+                                    echo '
+                                    <h3 style="color: green;">
+                                        <i>Resume Uploaded Successful!</i>
+                                    </h3>
+                                ';
                                 }
+                            }
                             ?>
 
                             <h1>Hi! I'm <?php echo $row['first_name']; ?> </h1>

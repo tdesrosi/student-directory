@@ -67,7 +67,7 @@ if (isset($_SESSION['username'])) {
 
                                         ?>
                                         <p>Initial Upload <a href="<?= htmlspecialchars($initialUpload->get('ObjectURL')) ?>">successful</a> :)</p>
-                                    <?php   header("Location: profile.php?uploadsuccess=true");
+                                    <?php   header("Location: profile.php?uploadsuccess=true_photo");
                                     } catch (Exception $e) { ?>
                                         <p>Upload error! Make sure your file isn't too large or the wrong format.</p>
                                      <?php }
@@ -114,7 +114,7 @@ if (isset($_SESSION['username'])) {
                 ?>
                                         <p>Upload <a href="<?= htmlspecialchars($upload->get('ObjectURL')) ?>">successful</a> :)</p>
                                     <?php
-                                        header("Location: profile.php?uploadsuccess=true");
+                                        header("Location: profile.php?uploadsuccess=true_resume");
                                     } catch (Exception $e) { ?>
                                         <p>Upload error! Make sure your file isn't too large or the wrong format.</p>
                 <?php }
