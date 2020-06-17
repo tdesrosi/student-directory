@@ -77,12 +77,18 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
                                 <br>
                             </div>
                             <div class='card_body'>
-                                
+
                                 <p>
-                                    Our current global predicament hampers our ability to engage with one another in meaningful ways. It also obstructs personal and professional development. This website is meant to be used as
-                                    a virtual community, for students to meet one another and for recruiters to appreciate our talents and capabilities. If you run into any bugs or errors, please feel free to send an email!
+                                    Our current global predicament hampers our ability to engage with one another in meaningful ways. 
+                                    It also obstructs personal and professional development. I built this website to be able to engage 
+                                    with the community virtually. Here, students can learn about another and recruiters can read about and 
+                                    appreciate our many talents and capabilities. If you run into any bugs or errors, please feel free to 
+                                    send me an email!
+                                    <br>
                                     <i><?php echo $email_string ?></i>
                                 </p>
+                                <br>
+                                <h4 style="text-align: center;">About Me:</h4>
                                 <br>
                                 <?php echo $hometown_string .
                                     $undergrad_inst_string .

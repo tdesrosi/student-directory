@@ -23,7 +23,7 @@ include("includes/classes/Post.php");
 ?>
 <div class="container-fluid">
     <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 col-sm-4 d-md-block bg-light sidebar collapse">
             <div class="sidebar-sticky pt-3">
                 <div class="user_details column">
                     <!-- Profile Image -->
@@ -80,7 +80,7 @@ include("includes/classes/Post.php");
                                 <br>
                                 <br>
                                 <h5>
-                                    We are so excited to share our wonderful students with you!
+                                    We are so excited to share our wonderful students with you! Click on a profile to get started.
                                 </h5>
                             </div>
                         </li>
@@ -119,17 +119,18 @@ include("includes/classes/Post.php");
                         </a>
                     </li>
                 </ul>
+                <div class="sidebar-footer">
+                    <a href="https://business.vanderbilt.edu/" target="_blank">
+                        <img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
+                    </a>
+                    <br>
+                    <small style="opacity: 0.5;">
+                        &copy; <?php $thisYear = (int) date('Y');
+                                echo $thisYear ?> Thomas Desrosiers
+                    </small>
+                </div>
             </div>
-            <div class="sidebar-footer">
-                <a href="https://business.vanderbilt.edu/" target="_blank">
-                    <img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
-                </a>
-                <br>
-                <small style="opacity: 0.5;">
-                    &copy; <?php $thisYear = (int) date('Y');
-                            echo $thisYear ?> Thomas Desrosiers
-                </small>
-            </div>
+
         </nav>
 
         <!-- Profiles -->

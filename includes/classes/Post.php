@@ -79,8 +79,11 @@ class Post
                                     <div class='poster_info'>
                                         <a href='" . $username . "'> $name </a>
                                         <br>
-                                        <p>$owen_program</p>
-                                        <p>$owen_classof_string</p>
+                                        <small>$owen_program</small>
+                                        <br>
+                                        <small>$owen_classof_string</small>
+                                        <br>
+                                        <br>
                                     </div>
                                     <div class='card_body'>
                                         <small>$personal_statement_string</small> 

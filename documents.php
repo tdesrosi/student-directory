@@ -24,8 +24,8 @@ if (isset($_SESSION['username'])) {
 
 
 <div style="width: 100%; height: 100%; ">
-    <div class="container-fluid" style="padding: 20px auto; ">
-        <div class="card col-lg-6" style="margin: 10% auto; min-width: 500px; text-align: center;">
+    <div class="container-fluid" style="padding: 30px auto; ">
+        <div class="card col-lg-6" style="margin: 200px auto; min-width: 450px; text-align: center; padding: 0;">
             <div class="contents" style="padding: 2%">
                 <h3>Manage Documents</h3>
                 <br>
@@ -161,7 +161,7 @@ if (isset($_SESSION['username'])) {
                 </form>
 
                 <br>
-                <a class="btn btn-outline-warning" href="<?php echo $userLoggedIn ?>">Done!</a>
+                <a class="btn btn-outline-dark" href="<?php echo $userLoggedIn ?>">Back to my Profile</a>
 
             </div>
         </div>
