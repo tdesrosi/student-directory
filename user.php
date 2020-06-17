@@ -18,15 +18,14 @@ include("includes/classes/GetPage.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   
     <script src="assets/js/owen-student-page.js"></script>
-
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/master.css">
 
     <title>Owen Student Directory</title>
 </head>
+
 
 <body>
 
@@ -53,31 +52,28 @@ include("includes/classes/GetPage.php");
         </nav>
     </header>
 
-<div class="wrapper">    
+    <div class="wrapper">
 
-<div>
-    <?php
-
-
-    if (isset($_GET['profile_username'])) {
-        $username = $_GET['profile_username'];
-
-        if(!(isset($userLoggedIn))) {
-            $userLoggedIn = "";
-        }
-
-        if ($username == $userLoggedIn) {
-            header("Location: profile.php");
-        } else {
-            $post = new GetPage($con, $username);
-            $post->loadUser();
-        }
-
-       
-    }
-    else echo "failed, didn't read htaccess redirect";
+        <div>
+            <?php
 
 
-    ?>
+            if (isset($_GET['profile_username'])) {
+                $username = $_GET['profile_username'];
 
-</div>
+                if (!(isset($userLoggedIn))) {
+                    $userLoggedIn = "";
+                }
+
+                if ($username == $userLoggedIn) {
+                    header("Location: profile.php");
+                } else {
+                    $post = new GetPage($con, $username);
+                    $post->loadUser();
+                }
+            } else echo "failed, didn't read htaccess redirect";
+
+
+            ?>
+
+        </div>
