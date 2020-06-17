@@ -80,7 +80,7 @@ include("includes/classes/Post.php");
                                 <br>
                                 <br>
                                 <h5>
-                                    If you have any issues, be sure to contact us to report any bugs you may run into.
+                                    We are so excited to share our wonderful students with you!
                                 </h5>
                             </div>
                         </li>

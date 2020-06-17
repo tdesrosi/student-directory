@@ -201,8 +201,9 @@ $webpage = $row['webpage'];
                                 <br>
                                 <!-- Phone Number -->
                                 <label for="reg_phone_number">Phone number:</label>
-                                <input type="tel" class="form-control" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reg_phone_number" value="<?php echo $phone_number; ?>">
-                                <small>Format: XXX-XXX-XXXX</small>
+                                <input type="text" class="form-control" style="width: 75%; margin-right: 12.5%; margin-left: 12.5%;" 
+                                        name="reg_phone_number" value="<?php echo $phone_number; ?>"
+                                        id="bar" placeholder="(123) 456-7890" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);">
                                 <br>
                                 <br>
                                 <!-- Email Sharing on/off -->
