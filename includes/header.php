@@ -41,9 +41,26 @@ if (isset($_SESSION['username'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="./contact.php">Contact Us</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: goldenrod;" href="./register.php">Student Login/Register</a>
-                    </li>
+                    <?php
+                        if (isset($_SESSION['username'])) {
+                            echo '
+                            <li class="nav-item">
+                                <a class="nav-link active" style="color: goldenrod;" href="' . $userLoggedIn . '">
+                                    <span data-feather="home"></span>
+                                    My Profile <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            ';
+                        } else {
+                            echo '
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: goldenrod;" href="./register.php">Student Login/Register</a>
+                            </li>
+                            ';
+                        }
+
+                    ?>
+                   
                 </ul>
                 <form class="form-inline mt-2 mt-md-0" style="margin: auto 0;" action="search.php" method="POST" name="search_form">
                     <input name="q" placeholder="Search..." autocomplete="off" class="form-control mr-sm-2" type="text" aria-label="Search" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" onkeydown="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn ?>')" id="search_text_input">
@@ -60,4 +77,3 @@ if (isset($_SESSION['username'])) {
 
     </header>
     <div class="wrapper">
-        

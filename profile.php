@@ -42,8 +42,8 @@ $webpage = $row['webpage'];
 ?>
 
 <div style='margin: 7% 7%'>
-    <div class='container-fluid row'>
-        <div class='col-md-4'>
+    <div class='container-fluid row' style='margin-left: 0 !important; margin-left: 0 !important;'>
+        <div class='col-md-4 mt-4'>
             <div class='card'>
                 <div class='card-body' style='padding: 0;'>
                     <div class='post_profile_pic'>
@@ -55,7 +55,12 @@ $webpage = $row['webpage'];
                         <div class='poster_info'>
                             <h3><?php echo $name ?></h3>
                             <br>
-                            <a class="btn btn-danger" href="settings.php">
+                            <a class="btn btn-outline-dark mb-2" href="includes/handlers/logout.php">
+                                <span data-feather="file"></span>
+                                Log Out
+                            </a>
+                            <br>
+                            <a class="btn btn-outline-dark" href="settings.php">
                                 <span data-feather="file"></span>
                                 Advanced account settings
                             </a>
@@ -67,7 +72,7 @@ $webpage = $row['webpage'];
                 </div>
             </div>
         </div>
-        <div class='col-md-8'>
+        <div class='col-md-8 mt-4'>
             <div class='card'>
                 <div class='card-body' style='padding: 0;'>
                     <div style='padding: 1rem; text-align: center;'>
@@ -91,13 +96,27 @@ $webpage = $row['webpage'];
                             }
                             ?>
 
-                            <h1>Hi! I'm <?php echo $row['first_name']; ?> </h1>
+                            <h1>Hi, <?php echo $row['first_name']; ?> </h1>
                             <br>
                             <h3>Use this page to edit your user details.</h3>
                             <br>
-                            <a class="btn btn-outline-warning" href="documents.php">Change profile picture and upload a resume here!</a>
+                            <br>
+                            <div class="border-bottom"></div>
+                            <br>
+                            <?php
+                            if ($resume_ == "") {
+                                echo '<p style="opacity: 0.7;"><i>No resume on file.</i></p>';
+                            } else {
+                                echo "<p style='opacity: 0.7;'><i>We've got a resume on file!</i></p>";
+                            }
+                            ?>
 
+                            <a class="btn btn-outline-dark" href="documents.php">Change profile picture and upload a resume here!</a>
+                            <br>
                         </div>
+                        <br>
+                        <div class="border-bottom"></div>
+                        <br>
                         <div class='form-group'>
                             <form action="profile.php" method="POST" class="form-group" name="main-form" enctype="multipart/form-data">
                                 <br>
@@ -155,7 +174,7 @@ $webpage = $row['webpage'];
                                 <textarea rows="5" name="reg_fun_fact" placeholder="Got any fun facts?"><?php echo $fun_fact; ?></textarea>
                                 <br>
                                 <!-- NOTICE THIS IS THE SOCIAL MEDIA FORM, FOR NOW, I'LL KEEP IT JUST TO LINKEDIN TO AVOID DEALING WITH ARRAYS -->
-                                <label for="reg_social_media"> Add a link to your Linkedin Profile:</label>
+                                <label for="reg_social_media"> Add a link to your LinkedIn Profile:</label>
                                 <br>
                                 <input type="text" name="reg_social_media" placeholder="Linkedin Profile URL" value="<?php echo $social_media; ?>">
                                 <br>
@@ -177,7 +196,7 @@ $webpage = $row['webpage'];
                                 <br>
                                 <input type="text" name="reg_webpage" placeholder="Personal Website URL" value="<?php echo $webpage; ?>">
                                 <br>
-                                <small style="opacity: 0.4;"><i>And if you do not have one and would like one, <a href="mailto:thomas.l.desrosiers@vanderbilt.edu">we should talk.</a></i></small>
+                                <small style="opacity: 0.6;"><i>And if you do not have one and would like one, <a href="mailto:thomas.l.desrosiers@vanderbilt.edu">we should talk!</a> :)</i></small>
                                 <br>
                                 <br>
                                 <!-- Phone Number -->

@@ -194,8 +194,8 @@ class GetPage
         //final string
         $str .= "
             <div style='margin: 4% 7%'>
-                <div class='container-fluid row'>
-                    <div class='col-md-4' >
+                <div class='container-fluid row' style='margin-left: 0 !important; margin-left: 0 !important;'>
+                    <div class='col-md-4 mt-4' >
                         <div class='card' >
                             <div class='card-body' style='padding: 0;' >
                                 <div class='assets/images/profile_pics/defaults/profile_default.png'>
@@ -222,7 +222,7 @@ class GetPage
                             </div>
                         </div> 
                     </div>
-                    <div class='col-md-8'>
+                    <div class='col-md-8 mt-4'>
                         <div class='card' >
                             <div class='card-body' style='padding: 0;' >
                                 <div style='padding: 1rem;'>

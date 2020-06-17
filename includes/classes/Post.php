@@ -59,15 +59,15 @@ class Post
 
                 $personal_statement_string = "";
                 if ($row['personal_statement'] != "") {
-                    if (strlen($row['personal_statement']) >= 120) {
-                        $personal_statement_string = substr($row['personal_statement'], 0, 120) . "...";
+                    if (strlen($row['personal_statement']) >= 80) {
+                        $personal_statement_string = substr($row['personal_statement'], 0, 80) . "...";
                     } else {
                         $personal_statement_string = $row['personal_statement'];
                     }
                 }
 
                 $str .= "
-                    <div class='col-lg-3 col-md-4 col-sm-6' style='padding: 0;'>
+                    <div class='col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-6' style='padding: 0;'>
                         <div class='card' style='width: auto; margin: 1rem;'>
                             <div class='card-body' style='padding: 0;' >
                                 <div class='post_profile_pic'>
@@ -83,7 +83,7 @@ class Post
                                         <p>$owen_classof_string</p>
                                     </div>
                                     <div class='card_body'>
-                                        <p>$personal_statement_string</p> 
+                                        <small>$personal_statement_string</small> 
                                     </div>
                                 </div>
                             </div>
