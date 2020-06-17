@@ -27,7 +27,7 @@ $undergrad_inst_string =
 $fun_fact_string =
     "<h6><i>Fun Fact?</i></h6>
             <p>
-                In my free time I can be found in the Wond'ry, usually working on somehting having to do with electronics. I'm really into audio engineering, and build and repair audio equipment. I also play clarinet and tuba!
+                In my free time I can be found in the Wond'ry, usually working on something having to do with electronics. I'm really into audio engineering, and build and repair audio equipment. I also play clarinet and tuba!
             </p>
             <br>";
 $resume_string = '';
@@ -77,11 +77,7 @@ $email_string = "<h6><a href=mailto:'thomas.l.desrosiers@vanderbilt.edu'>Send me
                                 <br>
                             </div>
                             <div class='card_body'>
-                                <!-- Personal Statment -->
-                                <p>
-                                    There was never a time in my life where I had just a single interest or hobby. My curiosity and desire to learn has led me in many different directions. At one moment I might find myself working on a wind tunnel to test the aerodynamics of paper airplanes and at the same time preparing a piece for a clarinet recital. I take pride in connecting my passions together and learning new things every step of the way.
-                                </p>
-                                <br>
+                                
                                 <p>
                                     Our current global predicament hampers our ability to engage with one another in meaningful ways. It also obstructs personal and professional development. This website is meant to be used as
                                     a virtual community, for students to meet one another and for recruiters to appreciate our talents and capabilities. If you run into any bugs or errors, please feel free to send an email!
