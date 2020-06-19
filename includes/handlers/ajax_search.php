@@ -3,7 +3,6 @@ include("../../config/config.php");
 include("../../includes/classes/User.php");
 
 $query = $_POST['query'];
-$userLoggedIn = $_POST['userLoggedIn'];
 
 $names = explode(" ", $query);
 
@@ -19,7 +18,6 @@ else
 
 if($query != "") {
     while($row = mysqli_fetch_array($usersReturnedQuery)) {
-        $user = new User($con, $userLoggedIn);
 
         echo "<div class='resultsDisplay row container-fluid'>
                 <a class='search-result' href='" . $row['username'] . "'>

@@ -134,9 +134,9 @@ include("includes/classes/Post.php");
         </nav>
 
         <!-- Profiles -->
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3" style="left: 10px;">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mt-5" id="main-platform">
-                <div class="container-fluid mt-1 mb-1">
+                <div class="container-fluid">
                     <div class="search-dropdown">
                         <div class="search_results">
                         </div>
