@@ -123,11 +123,7 @@ if (isset($_GET['q'])) {
                     
                     ';
 						}
-
-
 						?>
-
-
 						<div class="sidebar-footer">
 							<a href="https://business.vanderbilt.edu/" target="_blank">
 								<img style="border: none;" src="assets/images/icons/main_logo.png" alt="">
