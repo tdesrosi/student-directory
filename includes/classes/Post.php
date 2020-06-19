@@ -37,7 +37,7 @@ class Post
                     continue;
                 }
 
-                //once 18 have been loaded, break
+                //once enough have been loaded, break
                 if ($count > $limit) {
                     break;
                 } else {

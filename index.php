@@ -154,8 +154,10 @@ include("includes/classes/Post.php");
 
             <script>
                 var order_by = 'id';
+                var isProcessing = false;
 
                 function changeOrder(value) {
+
                     order_by = value;
                     console.log(order_by);
                 }
@@ -164,6 +166,7 @@ include("includes/classes/Post.php");
                     var loadCards = function() {
                         $('#loading').show();
                         //Original ajax request for loading first posts 
+                        
                         $.ajax({
                             url: "includes/handlers/ajax_load_posts.php",
                             type: "POST",

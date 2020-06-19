@@ -66,7 +66,7 @@ else {
 
 		<!-- Profiles -->
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-3">
-			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mt-5" id="main-platform">
+			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mt-5" id="main-platform">
 				<div class="container-fluid">
 
 
@@ -145,10 +145,10 @@ else {
 						}
 						echo " <div class='profile_post row'> $str </div>";
 					} else {
-						echo "<h1>No results found.</h1>";
+						echo "<div class='card'><h5 style='text-align: center;'>No results found.</h5></div>";
 					}
 				} else {
-					echo "You must enter something in the search box.";
+					echo "<div class='card'><h5 style='text-align: center;'>You must enter something in the search box.</h5></div>";
 				}
 				?>
 			</div>
