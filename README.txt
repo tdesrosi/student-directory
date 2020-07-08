@@ -1,6 +1,6 @@
 ______COPYRIGHT INFORMATION_______
 
-This file is the intellectual property of Thomas Desrosiers - All Rights Reserved.
+This file is the IP of Thomas Desrosiers - All Rights Reserved.
 
 Licenses to contained assets, including ImageManipulator.php,
 the Vanderbilt Unviersity Logo and Color Schema, and other third-party
